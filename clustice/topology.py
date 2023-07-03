@@ -1,7 +1,7 @@
 import random
 
 import networkx as nx
-
+from clustice.dipole import minimize_net_dipole
 
 def obey_ice_rules(g):
     """
@@ -52,16 +52,7 @@ def find_path(g):
         return list(reversed(c0)) + c1[1:]
 
     # cyclic graph
-    # find the smallest label
-    arg = 0
-    for i, memb in enumerate(c0):
-        if memb < c0[arg]:
-            arg = i
-    arg = 0
-    cyc = c0[:-1]
-    cyc = cyc[arg:] + cyc[:arg]
-    cyc.append(cyc[0])
-    return cyc
+    return c0
 
 
 def divide(g):
@@ -95,12 +86,13 @@ def divide(g):
     return divg
 
 
-def make_digraph(g, divg):
+def make_digraph(g, divg, pos=None):
     """
     Set the orientations to the components.
 
     divg: the divided graph made of chains and cycles.
           divg is an undirected graph.
+    pos: positions of the nodes. If given, the net dipole is minimized.
     """
     nnode = len(g)
 
@@ -112,22 +104,25 @@ def make_digraph(g, divg):
         ne = len([e for e in subg.edges()])
         assert nn == ne or nn == ne+1
         path = find_path(subg)
-        paths.append(path)
+        paths.append([v%nnode for v in path])
 
     # arrange the orientations here if you want to balance the polarization
-    # ...
+    if pos is not None:
+        paths = minimize_net_dipole(paths, pos)
+
+
 
     # target
     dg = nx.DiGraph(g)
 
     for path in paths:
         for i,j in zip(path, path[1:]):
-            dg.remove_edge(i%nnode,j%nnode)
+            dg.remove_edge(i,j)
 
     return dg
 
 
-def ice_graph(g):
+def ice_graph(g, pos=None):
     """
     Make a digraph that obeys the ice rules.
 
@@ -135,5 +130,5 @@ def ice_graph(g):
     """
 
     divg = divide(g)
-    dg = make_digraph(g, divg)
+    dg = make_digraph(g, divg, pos=pos)
     return dg

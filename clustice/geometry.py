@@ -3,7 +3,7 @@ import itertools as it
 import networkx as nx
 import numpy as np
 from sklearn import manifold
-
+from logging import getLogger
 
 def constellation(g, edgelen=1.0, max_iter=1000):
     """
@@ -126,6 +126,7 @@ def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
     k:        Bond length.
     max_iter: Number of iterations in the optimization.
     """
+    logger = getLogger()
 
     # force g be an undirected graph
     g = nx.Graph(g0)
@@ -136,7 +137,7 @@ def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
     for i in range(max_iter):
         relax(vertices, g, edgelen)
         if i+1 == verbose:
-            print(verbose, radius(vertices))
+            logger.info(f"{verbose} {radius(vertices)}")
             verbose *= 2
 
     new_layout = np.zeros_like(layout)
