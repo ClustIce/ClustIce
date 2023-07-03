@@ -145,3 +145,17 @@ def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
         new_layout[key] = vx.position
 
     return new_layout
+
+
+def make_layout(g, edgelen=1.0):
+    """Arrange the positions of the nodes in 3D.
+
+    Args:
+        g (_type_): An ice-like undirected graph whose degrees are not greater than 4.
+        edgelen (float, optional): Edge length. Defaults to 1.0.
+    """
+    # rough estimate of the positions of the nodes
+    layout = constellation(g, edgelen)
+
+    # optimize the tetrahedral arrangements
+    return tune_layout(g, layout, edgelen)
