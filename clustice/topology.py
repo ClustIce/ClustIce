@@ -1,7 +1,8 @@
-import random
-
 import networkx as nx
+import numpy as np
+
 from clustice.dipole import minimize_net_dipole
+
 
 def obey_ice_rules(g):
     """
@@ -10,7 +11,7 @@ def obey_ice_rules(g):
     for v in g:
         id = g.in_degree(v)
         od = g.out_degree(v)
-        if not (id in (1,2) and od in (1,2)):
+        if not (id in (1, 2) and od in (1, 2)):
             return False
     return True
 
@@ -63,7 +64,7 @@ def divide(g):
     """
 
     nnode = len(g)
-    #1. Split the nodes.
+    # 1. Split the nodes.
 
     # divided graph
     divg = nx.Graph(g)
@@ -74,13 +75,13 @@ def divide(g):
         # fill by Nones if number of neighbors is less than 4
         nei = (nei + [None, None, None, None])[:4]
         # two neighbor nodes that are passed away to the new node
-        migrate = set(random.sample(nei, 2)) - set([None])
+        migrate = set(np.random.choice(nei, 2, replace=False)) - set([None])
         # new node label
         newv = v + nnode
         # assemble edges
         for x in migrate:
-            divg.remove_edge(x,v)
-            divg.add_edge(newv,x)
+            divg.remove_edge(x, v)
+            divg.add_edge(newv, x)
 
     # divg is made of chains and cycles.
     return divg
@@ -102,22 +103,20 @@ def make_digraph(g, divg, pos=None):
         subg = divg.subgraph(c)
         nn = len(subg)
         ne = len([e for e in subg.edges()])
-        assert nn == ne or nn == ne+1
+        assert nn == ne or nn == ne + 1
         path = find_path(subg)
-        paths.append([v%nnode for v in path])
+        paths.append([v % nnode for v in path])
 
     # arrange the orientations here if you want to balance the polarization
     if pos is not None:
         paths = minimize_net_dipole(paths, pos)
 
-
-
     # target
     dg = nx.DiGraph(g)
 
     for path in paths:
-        for i,j in zip(path, path[1:]):
-            dg.remove_edge(i,j)
+        for i, j in zip(path, path[1:]):
+            dg.remove_edge(i, j)
 
     return dg
 

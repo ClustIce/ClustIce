@@ -1,9 +1,10 @@
 import itertools as it
+from logging import getLogger
 
 import networkx as nx
 import numpy as np
 from sklearn import manifold
-from logging import getLogger
+
 
 def constellation(g, edgelen=1.0, max_iter=1000):
     """
@@ -17,19 +18,52 @@ def constellation(g, edgelen=1.0, max_iter=1000):
     table = np.zeros([nnode, nnode])
     for i in D:
         for j, d in D[i].items():
-            table[i,j] = d * edgelen
-            table[j,i] = d * edgelen
+            table[i, j] = d * edgelen
+            table[j, i] = d * edgelen
 
     # Find the constellation that satisfies the distances.
-    mds = manifold.MDS(n_components=3,
-                    dissimilarity="precomputed",
-                    max_iter=max_iter,
-                    n_init=100,
-                    metric=True)
+    mds = manifold.MDS(
+        n_components=3,
+        dissimilarity="precomputed",
+        max_iter=max_iter,
+        n_init=100,
+        metric=True,
+    )
     pos = mds.fit_transform(table)
 
     # layout = {i:v for i, v in enumerate(pos)}
     return pos
+
+
+# def constellation(g, edgelen=1.0, max_iter=1000):
+#     """
+#     A rough estimate of the positions of the nodes
+
+#     k: bond length
+#     """
+#     # Prepare the distance matrix
+#     D = dict(nx.all_pairs_shortest_path_length(g))
+#     nnode = len(g.nodes)
+#     table = np.zeros([nnode, nnode])
+#     for i in D:
+#         for j, d in D[i].items():
+#             if d==1 or (g.degree(i) < 4 and g.degree(j) < 4):
+#                 table[i,j] = d * edgelen
+#                 table[j,i] = d * edgelen
+#             else:
+#                 table[i,j] = None
+#                 table[j,i] = None
+
+#     # Find the constellation that satisfies the distances.
+#     mds = manifold.MDS(n_components=3,
+#                     dissimilarity="precomputed",
+#                     max_iter=max_iter,
+#                     n_init=100,
+#                     metric=True)
+#     pos = mds.fit_transform(table)
+
+#     # layout = {i:v for i, v in enumerate(pos)}
+#     return pos
 
 
 #################################################
@@ -47,10 +81,11 @@ class Interaction:
         vertex1.force -= f
 
 
-class Vertex():
+class Vertex:
     """
     A vertex is a point mass.
     """
+
     def __init__(self, pos=None):
         if pos is None:
             self.position = np.random.random(3) * 3
@@ -74,7 +109,7 @@ def radius(vertices):
     Radius of gyration
     """
     pos = np.array([vx.position for key, vx in vertices.items()])
-    return np.sum(pos*pos) / pos.shape[0]
+    return np.sum(pos * pos) / pos.shape[0]
 
 
 def relax(vertices, g, edgelen):
@@ -105,7 +140,7 @@ def relax(vertices, g, edgelen):
         attractive.force(vertices[i], vertices[j])
     # containing angle
     for i in g:
-        for j,k in it.combinations(g.neighbors(i), 2):
+        for j, k in it.combinations(g.neighbors(i), 2):
             attractive2.force(vertices[j], vertices[k])
 
     # damped action
@@ -136,8 +171,8 @@ def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
     verbose = 1
     for i in range(max_iter):
         relax(vertices, g, edgelen)
-        if i+1 == verbose:
-            logger.info(f"{verbose} {radius(vertices)}")
+        if i + 1 == verbose:
+            logger.info(f"{verbose} {radius(vertices)} RG")
             verbose *= 2
 
     new_layout = np.zeros_like(layout)

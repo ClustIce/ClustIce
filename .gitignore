@@ -3,3 +3,6 @@ __pycache__/
 *.lock
 *.egg-info
 dist
+graph.py
+.vscode
+*.png
