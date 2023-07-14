@@ -13,6 +13,7 @@ jupyter = "*"
 [dev-packages]
 genice2 = "*"
 matplotlib = "*"
+black = "*"
 
 [requires]
 python_version = "3.11"

@@ -1,3 +1,5 @@
+from logging import getLogger
+
 import networkx as nx
 import numpy as np
 
@@ -86,10 +88,15 @@ def noodlize(g):
     # divg is made of chains and cycles.
     return divg
 
+
 def decompose_complex_path(path):
     """
     Divide a complex path to set of simple cycles and paths.
     """
+    logger = getLogger()
+    if len(path) == 0:
+        return
+    logger.debug(f"decomposing {path}...")
     order = dict()
     order[path[0]] = 0
     store = [path[0]]
@@ -109,8 +116,10 @@ def decompose_complex_path(path):
         order[node] = len(order)
         store.append(node)
         headp += 1
+        logger.debug([order, store])
     if len(store) > 1:
         yield store
+    logger.debug(f"Done decomposition.")
 
 
 def make_digraph(g, divg, pos=None, pbc=False):
@@ -137,7 +146,6 @@ def make_digraph(g, divg, pos=None, pbc=False):
         path = [v % nnode for v in path]
         # Divide a long path into simple paths and cycles.
         paths += list(decompose_complex_path(path))
-
 
     # arrange the orientations here if you want to balance the polarization
     if pos is not None:
