@@ -6,3 +6,4 @@ dist
 graph.py
 .vscode
 *.png
+.ipynb_checkpoints/clustice-checkpoint.ipynb

@@ -7,13 +7,13 @@ def fourth_vector(v1, v2, v3):
     """
     Calculate the fourth vector from three tetrahedral vectors.
     """
-    return -(v1+v2+v3)
+    return -(v1 + v2 + v3)
 
 
 # from genice
 def quat2rotmat(q):
     a, b, c, d = q
-    sp11 = (a * a + b * b - (c * c + d * d))
+    sp11 = a * a + b * b - (c * c + d * d)
     sp12 = -2.0 * (a * d + b * c)
     sp13 = 2.0 * (b * d - a * c)
     sp21 = 2.0 * (a * d - b * c)
@@ -22,8 +22,9 @@ def quat2rotmat(q):
     sp31 = 2.0 * (a * c + b * d)
     sp32 = 2.0 * (a * b - c * d)
     sp33 = a * a + d * d - (b * b + c * c)
-    return np.array([[sp11, sp12, sp13], [sp21, sp22, sp23],
-                    [sp31, sp32, sp33]]).T
+    return np.array(
+        [[sp11, sp12, sp13], [sp21, sp22, sp23], [sp31, sp32, sp33]]
+    ).T
 
 
 def compensate(vectors):
@@ -44,14 +45,14 @@ def compensate(vectors):
         r2 = np.cross(e0, ru)
         r2 /= np.linalg.norm(r2)
         # rotate v0 to make the second vector
-        phih = np.radians(109.5/2)
+        phih = np.radians(109.5 / 2)
         # quaternion for rotation
         a = np.cos(phih)
-        b =-np.sin(phih)*r2[0]
-        c = np.sin(phih)*r2[1]
-        d =-np.sin(phih)*r2[2]
+        b = -np.sin(phih) * r2[0]
+        c = np.sin(phih) * r2[1]
+        d = -np.sin(phih) * r2[2]
         # quaternion to rotation matrix
-        R = quat2rotmat([a,b,c,d])
+        R = quat2rotmat([a, b, c, d])
         # print(r2, r2@R)
         v1 = v0 @ R
         # VERIFY
@@ -63,12 +64,12 @@ def compensate(vectors):
         z = v1 + v2
         ey = y / np.linalg.norm(y)
         ez = z / np.linalg.norm(z)
-        ex = np.cross(ey,ez)
+        ex = np.cross(ey, ez)
         L1 = np.linalg.norm(v1)
         L2 = np.linalg.norm(v2)
-        L = (L1+L2)/2
-        theta = np.radians(109.5/2)
-        v3 = ex*L*np.sin(theta) - ez*L*np.cos(theta)
+        L = (L1 + L2) / 2
+        theta = np.radians(109.5 / 2)
+        v3 = ex * L * np.sin(theta) - ez * L * np.cos(theta)
         # print(v1,v2,v3)
         # VERIFY
         # e1 = v1 / np.linalg.norm(v1)
@@ -88,8 +89,9 @@ def compensate(vectors):
 # modified from GenIce
 # https://github.com/vitroid/GenIce
 
+
 def tip4p():
-    """ Interaction sites of TIP4P (?)
+    """Interaction sites of TIP4P (?)
     Order: OHHM
     """
     L1 = 0.9572 / 10
@@ -99,10 +101,9 @@ def tip4p():
     hy = L1 * np.sin(theta / 2)
     hz = L1 * np.cos(theta / 2)
     mz = L2
-    sites = np.array([[0.0, 0.0, 0.0],
-                            [0.0, hy, hz],
-                            [0.0, -hy, hz],
-                            [0.0, 0.0, mz]])
+    sites = np.array(
+        [[0.0, 0.0, 0.0], [0.0, hy, hz], [0.0, -hy, hz], [0.0, 0.0, mz]]
+    )
     sites -= (sites[1] + sites[2]) / 18
     return sites, "OHHM"
 
@@ -115,11 +116,11 @@ def orient_water(vout1, vout2):
     z = vout1 + vout2
     y /= np.linalg.norm(y)
     z /= np.linalg.norm(z)
-    x = np.cross(y,z)
-    return np.array([x,y,z])
+    x = np.cross(y, z)
+    return np.array([x, y, z])
 
 
-def molecules_iter(dg, layout, watermodel=tip4p, max_iter=100):
+def molecules_iter(dg, layout, watermodel=tip4p, max_iter=100, pbc=False):
     """
     Generate an atomic arrangements of water cluster fron the given digraph dg.
 
@@ -133,9 +134,12 @@ def molecules_iter(dg, layout, watermodel=tip4p, max_iter=100):
         # edge vectors from/to vertex v (origin is always v)
         v_in = [layout[i] - layout[v] for i in nei_in]
         v_out = [layout[i] - layout[v] for i in nei_out]
+        if pbc:
+            v_in = [v - np.floor(v + 0.5) for v in v_in]
+            v_out = [v - np.floor(v + 0.5) for v in v_out]
 
         # Compensate missing tetrahedral vectors
-        addv = compensate(v_in+v_out)
+        addv = compensate(v_in + v_out)
         miss_out = 2 - len(nei_out)
         v_out += random.sample(addv, miss_out)
 

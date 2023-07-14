@@ -1,6 +1,8 @@
 from logging import DEBUG, INFO, basicConfig, getLogger
 
 import networkx as nx
+
+# import py3Dmol
 from genice2.genice import GenIce
 from genice2.plugin import Format, Lattice
 
@@ -33,6 +35,15 @@ gro = render(
     layout @ cell,
     watermodel=tip4p,
     cell=f"{cell[0,0]} {cell[1,1]} {cell[2,2]}",
+    pbc=True,
 )
 with open(f"save.gro", "w") as f:
     f.write(gro)
+
+# # show
+# view = py3Dmol.view()
+# view.addModel(gro, "gro")
+# view.setStyle({"stick": {}})
+# view.addUnitCell()
+# view.zoomTo()
+# view.show()
