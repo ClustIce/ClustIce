@@ -56,9 +56,9 @@ def find_path(g):
     return c0
 
 
-def divide(g):
+def noodlize(g):
     """
-    Divide the graph into components
+    Divide each node of the graph and make them a set of paths.
 
     A new algorithm suggested by Prof. Sakuma, Yamagata University.
     """
@@ -86,6 +86,32 @@ def divide(g):
     # divg is made of chains and cycles.
     return divg
 
+def decompose_complex_path(path):
+    """
+    Divide a complex path to set of simple cycles and paths.
+    """
+    order = dict()
+    order[path[0]] = 0
+    store = [path[0]]
+    headp = 1
+    while headp < len(path):
+        node = path[headp]
+        if node in order:
+            # it is a cycle!
+            size = len(order) - order[node]
+            cycle = store[-size:] + [node]
+            yield cycle
+            # remove them from the order[]
+            for v in cycle[1:]:
+                del order[v]
+            # truncate the store
+            store = store[:-size]
+        order[node] = len(order)
+        store.append(node)
+        headp += 1
+    if len(store) > 1:
+        yield store
+
 
 def make_digraph(g, divg, pos=None, pbc=False):
     """
@@ -104,8 +130,14 @@ def make_digraph(g, divg, pos=None, pbc=False):
         nn = len(subg)
         ne = len([e for e in subg.edges()])
         assert nn == ne or nn == ne + 1
+        # Find a simple path in the doubled graph
+        # It must be a simple path or a simple cycle.
         path = find_path(subg)
-        paths.append([v % nnode for v in path])
+        # Flatten then path. It may make the path self-crossing.
+        path = [v % nnode for v in path]
+        # Divide a long path into simple paths and cycles.
+        paths += list(decompose_complex_path(path))
+
 
     # arrange the orientations here if you want to balance the polarization
     if pos is not None:
@@ -128,6 +160,6 @@ def ice_graph(g, pos=None, pbc=False):
     A new algorithm suggested by Prof. Sakuma, Yamagata University.
     """
 
-    divg = divide(g)
+    divg = noodlize(g)
     dg = make_digraph(g, divg, pos=pos, pbc=pbc)
     return dg

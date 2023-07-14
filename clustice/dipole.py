@@ -4,7 +4,7 @@ from logging import getLogger
 import numpy as np
 
 
-def minimize_net_dipole(paths, pos, maxiter=1000, pbc=False):
+def minimize_net_dipole(paths, pos, maxiter=2000, pbc=False):
     """Minimize the net polarization by flipping paths.
 
     Args:
@@ -42,10 +42,10 @@ def minimize_net_dipole(paths, pos, maxiter=1000, pbc=False):
                 dipoles.append(chain_pol)
                 polarized.append(i)
     dipoles = np.array(dipoles)
-    logger.debug(dipoles)
+    # logger.debug(dipoles)
 
     pol_optimal = np.sum(dipoles, axis=0)
-    logger.debug(pol_optimal)
+    logger.info(f"init {np.linalg.norm(pol_optimal)} dipole")
     parity_optimal = np.ones(len(dipoles))
     for loop in range(maxiter):
         parity = np.random.randint(2, size=len(dipoles)) * 2 - 1
@@ -53,7 +53,7 @@ def minimize_net_dipole(paths, pos, maxiter=1000, pbc=False):
         if net_pol @ net_pol < pol_optimal @ pol_optimal:
             pol_optimal = net_pol
             parity_optimal = parity
-            logger.info(f"{loop} {pol_optimal} dipole")
+            logger.info(f"{loop} {np.linalg.norm(pol_optimal)} dipole")
             if pol_optimal @ pol_optimal < 1e-10:
                 break
 
