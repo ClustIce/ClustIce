@@ -33,7 +33,7 @@ def chain(g, seq):
 
 def find_path(g):
     """
-    Find the longest path in g. g must be a linear or a simple cyclic graph.
+    Find the path in g. g must be a linear or a simple cyclic graph.
     """
     nodes = list(g.nodes())
     head = nodes[0]
@@ -87,7 +87,7 @@ def divide(g):
     return divg
 
 
-def make_digraph(g, divg, pos=None):
+def make_digraph(g, divg, pos=None, pbc=False):
     """
     Set the orientations to the components.
 
@@ -109,7 +109,7 @@ def make_digraph(g, divg, pos=None):
 
     # arrange the orientations here if you want to balance the polarization
     if pos is not None:
-        paths = minimize_net_dipole(paths, pos)
+        paths = minimize_net_dipole(paths, pos, pbc=pbc)
 
     # target
     dg = nx.DiGraph(g)
@@ -121,7 +121,7 @@ def make_digraph(g, divg, pos=None):
     return dg
 
 
-def ice_graph(g, pos=None):
+def ice_graph(g, pos=None, pbc=False):
     """
     Make a digraph that obeys the ice rules.
 
@@ -129,5 +129,5 @@ def ice_graph(g, pos=None):
     """
 
     divg = divide(g)
-    dg = make_digraph(g, divg, pos=pos)
+    dg = make_digraph(g, divg, pos=pos, pbc=pbc)
     return dg
