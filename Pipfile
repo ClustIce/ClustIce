@@ -4,16 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-py3dmol = "*"
 networkx = "*"
 numpy = "*"
 scikit-learn = "*"
-jupyter = "*"
+pairlist = "*"
 
 [dev-packages]
 genice2 = "*"
 matplotlib = "*"
 black = "*"
+py3dmol = "*"
+jupyter = "*"
 
 [requires]
 python_version = "3.11"

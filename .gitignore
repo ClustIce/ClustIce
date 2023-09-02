@@ -3,7 +3,9 @@ __pycache__/
 *.lock
 *.egg-info
 dist
-graph.py
 .vscode
 *.png
 .ipynb_checkpoints/clustice-checkpoint.ipynb
+
+# これは望月の許可を得てから。
+graph.py
