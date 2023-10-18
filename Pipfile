@@ -6,8 +6,8 @@ name = "pypi"
 [packages]
 networkx = "*"
 numpy = "*"
-scikit-learn = "*"
 pairlist = "*"
+genice-core = "==0.1.1"
 
 [dev-packages]
 genice2 = "*"
@@ -15,6 +15,7 @@ matplotlib = "*"
 black = "*"
 py3dmol = "*"
 jupyter = "*"
+twine = "*"
 
 [requires]
 python_version = "3.11"

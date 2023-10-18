@@ -3,12 +3,12 @@ from logging import DEBUG, INFO, basicConfig, getLogger
 import networkx as nx
 import numpy as np
 
-from clustice.coder import decode, encode
-from clustice.geometry import make_layout
+from genice_core.coder import decode, encode
+from genice_core.geometry import make_layout
 from clustice.graph import great_icosahedron, great_decahedron
-from clustice.gromacs import render
-from clustice.topology import ice_graph
-from clustice.water import tip4p
+from genice_core.gromacs import render
+from genice_core.topology import ice_graph
+from genice_core.water import tip4p
 
 logger = getLogger()
 basicConfig(level=INFO)
