@@ -3,12 +3,12 @@ from logging import DEBUG, INFO, basicConfig, getLogger
 import networkx as nx
 import numpy as np
 
-from genice_core.coder import decode, encode
-from genice_core.geometry import make_layout
+from genice_core.serialize import serialize, deserialize
+from genice_core import ice_graph
+from clustice.geometry import make_layout
 from clustice.graph import great_icosahedron, great_decahedron
-from genice_core.gromacs import render
-from genice_core.topology import ice_graph
-from genice_core.water import tip4p
+from clustice.gromacs import render
+from clustice.water import tip4p
 
 logger = getLogger()
 basicConfig(level=INFO)
@@ -18,7 +18,7 @@ np.random.seed(12345)
 # g = nx.dodecahedral_graph()  # dodecahedral 20mer
 # g = nx.cubical_graph()
 # g = great_icosahedron(2)
-g = great_decahedron(20)
+g = great_decahedron(2)
 
 # O-O distance
 L = 0.27
@@ -30,7 +30,7 @@ layout = np.array([g.nodes[v]["pos"] for v in g])
 
 # set orientations of the hydrogen bonds.
 # if pos is given, the net dipole moment is minimized.
-dg = ice_graph(g, pos=layout)
+dg = ice_graph(g, vertexPositions=layout)
 
 test_encoder = False
 if test_encoder:

@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ClustIce"
-version = "0.2" # major.minor.fix
+version = "0.3" # major.minor.fix
 authors = [
   { name="Masakazu Matsumoto", email="vitroid@gmail.com" },
 ]
@@ -17,7 +17,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dependencies = ["numpy", "networkx", "pairlist"]
+dependencies = ["numpy", "networkx", "pairlist", "genice-core>=0.3"]
 
 [project.urls]
 "Homepage" = "https://github.com/vitroid/ClustIce"

@@ -7,7 +7,7 @@ name = "pypi"
 networkx = "*"
 numpy = "*"
 pairlist = "*"
-genice-core = "==0.1.1"
+genice-core = "*"
 
 [dev-packages]
 genice2 = "*"
