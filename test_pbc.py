@@ -5,19 +5,16 @@ import networkx as nx
 # import py3Dmol
 from genice2.genice import GenIce
 from genice2.plugin import Format, Lattice
-
 from clustice.gromacs import render
-from genice_core import ice_graph
 from clustice.water import tip4p
+import genice_core
 
 logger = getLogger()
 basicConfig(level=DEBUG)
 
 lattice = Lattice("1h")
 formatter = Format("raw", stage=(1, 2))
-raw = GenIce(lattice, signature="Ice Ih", rep=(3, 3, 3)).generate_ice(
-    formatter
-)
+raw = GenIce(lattice, signature="Ice Ih", rep=(3, 3, 3)).generate_ice(formatter)
 
 # graph is the topology of the hydrogen-bond network
 g = nx.Graph(raw["graph"])
@@ -27,7 +24,9 @@ layout = raw["reppositions"]
 cell = raw["repcell"]
 
 # set orientations of the hydrogen bonds.
-dg = ice_graph(g, vertexPositions=layout, isPeriodicBoundary=True, dipoleOptimizationCycles=200)
+dg = genice_core.ice_graph(
+    g, vertexPositions=layout, isPeriodicBoundary=True, dipoleOptimizationCycles=200
+)
 
 # put water molecules
 gro = render(

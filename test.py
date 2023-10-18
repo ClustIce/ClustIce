@@ -3,12 +3,12 @@ from logging import DEBUG, INFO, basicConfig, getLogger
 import networkx as nx
 import numpy as np
 
-from genice_core.serialize import serialize, deserialize
-from genice_core import ice_graph
+from clustice.serialize import serialize, deserialize
 from clustice.geometry import make_layout
 from clustice.graph import great_icosahedron, great_decahedron
 from clustice.gromacs import render
 from clustice.water import tip4p
+import genice_core
 
 logger = getLogger()
 basicConfig(level=INFO)
@@ -30,7 +30,7 @@ layout = np.array([g.nodes[v]["pos"] for v in g])
 
 # set orientations of the hydrogen bonds.
 # if pos is given, the net dipole moment is minimized.
-dg = ice_graph(g, vertexPositions=layout)
+dg = genice_core.ice_graph(g, vertexPositions=layout)
 
 test_encoder = False
 if test_encoder:

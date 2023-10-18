@@ -17,7 +17,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dependencies = ["numpy", "networkx", "pairlist", "genice-core>=0.3"]
+dependencies = ["numpy", "networkx", "pairlist", "sciki-learn"]
 
 [project.urls]
 "Homepage" = "https://github.com/vitroid/ClustIce"
