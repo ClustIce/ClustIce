@@ -6,7 +6,9 @@ import numpy as np
 from sklearn import manifold
 
 
-def constellation(g:nx.Graph, edge_length:float=1.0, max_iter:int=1000)->np.array:
+def constellation(
+    g: nx.Graph, edge_length: float = 1.0, max_iter: int = 1000
+) -> np.array:
     """_summary_
 
     Args:
@@ -189,7 +191,7 @@ def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
     return new_layout
 
 
-def make_layout(g:nx.Graph, edgelen:float=1.0)->np.array:
+def make_layout(g: nx.Graph, edgelen: float = 1.0) -> np.array:
     """Arrange the positions of the nodes in 3D.
 
     Args:

@@ -13,13 +13,14 @@ def serialize(dg: nx.DiGraph) -> str:
     Returns:
         str: a string representing the digraph.
     """
+
     def encode1(v):
         return "+".join(f"{x}" for x in sorted(dg.successors(v)))
 
     return ".".join(encode1(v) for v in sorted(dg.nodes()))
 
 
-def deserialize(s:str) -> nx.Graph:
+def deserialize(s: str) -> nx.Graph:
     """Decode a string into a digraph
 
     Args:

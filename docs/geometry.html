@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>clustice.geometry API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>clustice.geometry</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import itertools as it
+from logging import getLogger
+
+import networkx as nx
+import numpy as np
+from sklearn import manifold
+
+
+def constellation(g:nx.Graph, edge_length:float=1.0, max_iter:int=1000)-&gt;np.array:
+    &#34;&#34;&#34;_summary_
+
+    Args:
+        g (nx.Graph): _description_
+        edge_length (float, optional): _description_. Defaults to 1.0.
+        max_iter (int, optional): _description_. Defaults to 1000.
+
+    Returns:
+        np.array: _description_
+    &#34;&#34;&#34;
+    # Prepare the distance matrix
+    D = dict(nx.all_pairs_shortest_path_length(g))
+    nnode = len(g.nodes)
+    table = np.zeros([nnode, nnode])
+    for i in D:
+        for j, d in D[i].items():
+            table[i, j] = d
+            table[j, i] = d
+    table *= edge_length
+
+    # Find the constellation that satisfies the distances.
+    mds = manifold.MDS(
+        n_components=3,
+        dissimilarity=&#34;precomputed&#34;,
+        max_iter=max_iter,
+        n_init=100,
+        metric=True,
+    )
+    pos = mds.fit_transform(table)
+
+    # layout = {i:v for i, v in enumerate(pos)}
+    return pos
+
+
+# def constellation(g, edgelen=1.0, max_iter=1000):
+#     &#34;&#34;&#34;
+#     A rough estimate of the positions of the nodes
+
+#     k: bond length
+#     &#34;&#34;&#34;
+#     # Prepare the distance matrix
+#     D = dict(nx.all_pairs_shortest_path_length(g))
+#     nnode = len(g.nodes)
+#     table = np.zeros([nnode, nnode])
+#     for i in D:
+#         for j, d in D[i].items():
+#             if d==1 or (g.degree(i) &lt; 4 and g.degree(j) &lt; 4):
+#                 table[i,j] = d * edgelen
+#                 table[j,i] = d * edgelen
+#             else:
+#                 table[i,j] = None
+#                 table[j,i] = None
+
+#     # Find the constellation that satisfies the distances.
+#     mds = manifold.MDS(n_components=3,
+#                     dissimilarity=&#34;precomputed&#34;,
+#                     max_iter=max_iter,
+#                     n_init=100,
+#                     metric=True)
+#     pos = mds.fit_transform(table)
+
+#     # layout = {i:v for i, v in enumerate(pos)}
+#     return pos
+
+
+#################################################
+# spring_layout modified from graphform
+# https://github.com/vitroid/GraphForm
+class Interaction:
+    def __init__(self, forcefunc):
+        self.func = forcefunc
+
+    def force(self, vertex0, vertex1):
+        d = vertex0.position - vertex1.position
+        r = np.linalg.norm(d)
+        f = self.func(r) * d / r
+        vertex0.force += f
+        vertex1.force -= f
+
+
+class Vertex:
+    &#34;&#34;&#34;
+    A vertex is a point mass.
+    &#34;&#34;&#34;
+
+    def __init__(self, pos=None):
+        if pos is None:
+            self.position = np.random.random(3) * 3
+        else:
+            self.position = pos
+        self.velocity = np.zeros(3)
+        self.force = np.zeros(3)
+
+    def force2vel(self):
+        self.velocity = self.force + 0
+
+    def progress(self, deltatime):
+        self.position += self.velocity * deltatime
+
+    def resetf(self):
+        self.force = np.zeros(3)
+
+
+def radius(vertices):
+    &#34;&#34;&#34;
+    Radius of gyration
+    &#34;&#34;&#34;
+    pos = np.array([vx.position for key, vx in vertices.items()])
+    return np.sum(pos * pos) / pos.shape[0]
+
+
+def relax(vertices, g, edgelen):
+    &#34;&#34;&#34;
+    move vertices to reduce the energy
+
+    interaction is a function of a vector.
+
+    R0: equilibrium length of an edge.
+    &#34;&#34;&#34;
+    K = 1
+    KR = 1
+    # distance of a skip pair.
+    golden = 1.62
+    skiplen = edgelen * golden
+    attractive = Interaction(lambda r: -K * (r - edgelen))
+    attractive2 = Interaction(lambda r: -K * (r - skiplen) / 2)
+    # repulsive = Interaction(lambda r: repel(r, KR, Rrep))
+
+    # reset the force at vertices.
+    for v in vertices:
+        vertices[v].resetf()
+
+    # accumulate force
+
+    # bond length
+    for i, j in g.edges():
+        attractive.force(vertices[i], vertices[j])
+    # containing angle
+    for i in g:
+        for j, k in it.combinations(g.neighbors(i), 2):
+            attractive2.force(vertices[j], vertices[k])
+
+    # damped action
+    for v in vertices:
+        vertices[v].force2vel()
+        vertices[v].progress(0.3)
+    # Centering
+    com = np.mean(np.array([vertices[v].position for v in g]), axis=0)
+    for v in g:
+        vertices[v].position -= com
+
+
+def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
+    &#34;&#34;&#34;
+    Optimize the positions of the nodes in g0 and embed them as attributes.
+
+    layout:   array of positions
+    k:        Bond length.
+    max_iter: Number of iterations in the optimization.
+    &#34;&#34;&#34;
+    logger = getLogger()
+
+    # force g be an undirected graph
+    g = nx.Graph(g0)
+    vertices = dict()
+    for v in g:
+        vertices[v] = Vertex(pos=layout[v])
+    verbose = 1
+    for i in range(max_iter):
+        relax(vertices, g, edgelen)
+        if i + 1 == verbose:
+            logger.info(f&#34;{verbose} {radius(vertices)} RG&#34;)
+            verbose *= 2
+
+    new_layout = np.zeros_like(layout)
+    # update the positions in g0
+    for key, vx in vertices.items():
+        new_layout[key] = vx.position
+
+    return new_layout
+
+
+def make_layout(g:nx.Graph, edgelen:float=1.0)-&gt;np.array:
+    &#34;&#34;&#34;Arrange the positions of the nodes in 3D.
+
+    Args:
+        g (nx.Graph): An ice-like undirected graph whose degrees are not greater than 4.
+        edgelen (float, optional): Edge length. Defaults to 1.0.
+    Returns:
+        np.array: positions of vertices.
+    &#34;&#34;&#34;
+    # rough estimate of the positions of the nodes
+    layout = constellation(g, edgelen)
+
+    # optimize the tetrahedral arrangements
+    return tune_layout(g, layout, edgelen)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="clustice.geometry.constellation"><code class="name flex">
+<span>def <span class="ident">constellation</span></span>(<span>g: networkx.classes.graph.Graph, edge_length: float = 1.0, max_iter: int = 1000) ‑> <built-in function array></span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>g</code></strong> :&ensp;<code>nx.Graph</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>edge_length</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd><em>description</em>. Defaults to 1.0.</dd>
+<dt><strong><code>max_iter</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd><em>description</em>. Defaults to 1000.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>np.array</code></dt>
+<dd><em>description</em></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def constellation(g:nx.Graph, edge_length:float=1.0, max_iter:int=1000)-&gt;np.array:
+    &#34;&#34;&#34;_summary_
+
+    Args:
+        g (nx.Graph): _description_
+        edge_length (float, optional): _description_. Defaults to 1.0.
+        max_iter (int, optional): _description_. Defaults to 1000.
+
+    Returns:
+        np.array: _description_
+    &#34;&#34;&#34;
+    # Prepare the distance matrix
+    D = dict(nx.all_pairs_shortest_path_length(g))
+    nnode = len(g.nodes)
+    table = np.zeros([nnode, nnode])
+    for i in D:
+        for j, d in D[i].items():
+            table[i, j] = d
+            table[j, i] = d
+    table *= edge_length
+
+    # Find the constellation that satisfies the distances.
+    mds = manifold.MDS(
+        n_components=3,
+        dissimilarity=&#34;precomputed&#34;,
+        max_iter=max_iter,
+        n_init=100,
+        metric=True,
+    )
+    pos = mds.fit_transform(table)
+
+    # layout = {i:v for i, v in enumerate(pos)}
+    return pos</code></pre>
+</details>
+</dd>
+<dt id="clustice.geometry.make_layout"><code class="name flex">
+<span>def <span class="ident">make_layout</span></span>(<span>g: networkx.classes.graph.Graph, edgelen: float = 1.0) ‑> <built-in function array></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Arrange the positions of the nodes in 3D.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>g</code></strong> :&ensp;<code>nx.Graph</code></dt>
+<dd>An ice-like undirected graph whose degrees are not greater than 4.</dd>
+<dt><strong><code>edgelen</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>Edge length. Defaults to 1.0.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>np.array</code></dt>
+<dd>positions of vertices.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_layout(g:nx.Graph, edgelen:float=1.0)-&gt;np.array:
+    &#34;&#34;&#34;Arrange the positions of the nodes in 3D.
+
+    Args:
+        g (nx.Graph): An ice-like undirected graph whose degrees are not greater than 4.
+        edgelen (float, optional): Edge length. Defaults to 1.0.
+    Returns:
+        np.array: positions of vertices.
+    &#34;&#34;&#34;
+    # rough estimate of the positions of the nodes
+    layout = constellation(g, edgelen)
+
+    # optimize the tetrahedral arrangements
+    return tune_layout(g, layout, edgelen)</code></pre>
+</details>
+</dd>
+<dt id="clustice.geometry.radius"><code class="name flex">
+<span>def <span class="ident">radius</span></span>(<span>vertices)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Radius of gyration</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def radius(vertices):
+    &#34;&#34;&#34;
+    Radius of gyration
+    &#34;&#34;&#34;
+    pos = np.array([vx.position for key, vx in vertices.items()])
+    return np.sum(pos * pos) / pos.shape[0]</code></pre>
+</details>
+</dd>
+<dt id="clustice.geometry.relax"><code class="name flex">
+<span>def <span class="ident">relax</span></span>(<span>vertices, g, edgelen)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>move vertices to reduce the energy</p>
+<p>interaction is a function of a vector.</p>
+<p>R0: equilibrium length of an edge.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def relax(vertices, g, edgelen):
+    &#34;&#34;&#34;
+    move vertices to reduce the energy
+
+    interaction is a function of a vector.
+
+    R0: equilibrium length of an edge.
+    &#34;&#34;&#34;
+    K = 1
+    KR = 1
+    # distance of a skip pair.
+    golden = 1.62
+    skiplen = edgelen * golden
+    attractive = Interaction(lambda r: -K * (r - edgelen))
+    attractive2 = Interaction(lambda r: -K * (r - skiplen) / 2)
+    # repulsive = Interaction(lambda r: repel(r, KR, Rrep))
+
+    # reset the force at vertices.
+    for v in vertices:
+        vertices[v].resetf()
+
+    # accumulate force
+
+    # bond length
+    for i, j in g.edges():
+        attractive.force(vertices[i], vertices[j])
+    # containing angle
+    for i in g:
+        for j, k in it.combinations(g.neighbors(i), 2):
+            attractive2.force(vertices[j], vertices[k])
+
+    # damped action
+    for v in vertices:
+        vertices[v].force2vel()
+        vertices[v].progress(0.3)
+    # Centering
+    com = np.mean(np.array([vertices[v].position for v in g]), axis=0)
+    for v in g:
+        vertices[v].position -= com</code></pre>
+</details>
+</dd>
+<dt id="clustice.geometry.tune_layout"><code class="name flex">
+<span>def <span class="ident">tune_layout</span></span>(<span>g0, layout, edgelen=1.0, max_iter=100)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Optimize the positions of the nodes in g0 and embed them as attributes.</p>
+<p>layout:
+array of positions
+k:
+Bond length.
+max_iter: Number of iterations in the optimization.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
+    &#34;&#34;&#34;
+    Optimize the positions of the nodes in g0 and embed them as attributes.
+
+    layout:   array of positions
+    k:        Bond length.
+    max_iter: Number of iterations in the optimization.
+    &#34;&#34;&#34;
+    logger = getLogger()
+
+    # force g be an undirected graph
+    g = nx.Graph(g0)
+    vertices = dict()
+    for v in g:
+        vertices[v] = Vertex(pos=layout[v])
+    verbose = 1
+    for i in range(max_iter):
+        relax(vertices, g, edgelen)
+        if i + 1 == verbose:
+            logger.info(f&#34;{verbose} {radius(vertices)} RG&#34;)
+            verbose *= 2
+
+    new_layout = np.zeros_like(layout)
+    # update the positions in g0
+    for key, vx in vertices.items():
+        new_layout[key] = vx.position
+
+    return new_layout</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="clustice.geometry.Interaction"><code class="flex name class">
+<span>class <span class="ident">Interaction</span></span>
+<span>(</span><span>forcefunc)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Interaction:
+    def __init__(self, forcefunc):
+        self.func = forcefunc
+
+    def force(self, vertex0, vertex1):
+        d = vertex0.position - vertex1.position
+        r = np.linalg.norm(d)
+        f = self.func(r) * d / r
+        vertex0.force += f
+        vertex1.force -= f</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="clustice.geometry.Interaction.force"><code class="name flex">
+<span>def <span class="ident">force</span></span>(<span>self, vertex0, vertex1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def force(self, vertex0, vertex1):
+    d = vertex0.position - vertex1.position
+    r = np.linalg.norm(d)
+    f = self.func(r) * d / r
+    vertex0.force += f
+    vertex1.force -= f</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="clustice.geometry.Vertex"><code class="flex name class">
+<span>class <span class="ident">Vertex</span></span>
+<span>(</span><span>pos=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A vertex is a point mass.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Vertex:
+    &#34;&#34;&#34;
+    A vertex is a point mass.
+    &#34;&#34;&#34;
+
+    def __init__(self, pos=None):
+        if pos is None:
+            self.position = np.random.random(3) * 3
+        else:
+            self.position = pos
+        self.velocity = np.zeros(3)
+        self.force = np.zeros(3)
+
+    def force2vel(self):
+        self.velocity = self.force + 0
+
+    def progress(self, deltatime):
+        self.position += self.velocity * deltatime
+
+    def resetf(self):
+        self.force = np.zeros(3)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="clustice.geometry.Vertex.force2vel"><code class="name flex">
+<span>def <span class="ident">force2vel</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def force2vel(self):
+    self.velocity = self.force + 0</code></pre>
+</details>
+</dd>
+<dt id="clustice.geometry.Vertex.progress"><code class="name flex">
+<span>def <span class="ident">progress</span></span>(<span>self, deltatime)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def progress(self, deltatime):
+    self.position += self.velocity * deltatime</code></pre>
+</details>
+</dd>
+<dt id="clustice.geometry.Vertex.resetf"><code class="name flex">
+<span>def <span class="ident">resetf</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def resetf(self):
+    self.force = np.zeros(3)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="clustice" href="index.html">clustice</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="clustice.geometry.constellation" href="#clustice.geometry.constellation">constellation</a></code></li>
+<li><code><a title="clustice.geometry.make_layout" href="#clustice.geometry.make_layout">make_layout</a></code></li>
+<li><code><a title="clustice.geometry.radius" href="#clustice.geometry.radius">radius</a></code></li>
+<li><code><a title="clustice.geometry.relax" href="#clustice.geometry.relax">relax</a></code></li>
+<li><code><a title="clustice.geometry.tune_layout" href="#clustice.geometry.tune_layout">tune_layout</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="clustice.geometry.Interaction" href="#clustice.geometry.Interaction">Interaction</a></code></h4>
+<ul class="">
+<li><code><a title="clustice.geometry.Interaction.force" href="#clustice.geometry.Interaction.force">force</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="clustice.geometry.Vertex" href="#clustice.geometry.Vertex">Vertex</a></code></h4>
+<ul class="">
+<li><code><a title="clustice.geometry.Vertex.force2vel" href="#clustice.geometry.Vertex.force2vel">force2vel</a></code></li>
+<li><code><a title="clustice.geometry.Vertex.progress" href="#clustice.geometry.Vertex.progress">progress</a></code></li>
+<li><code><a title="clustice.geometry.Vertex.resetf" href="#clustice.geometry.Vertex.resetf">resetf</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

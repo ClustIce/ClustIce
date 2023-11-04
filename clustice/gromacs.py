@@ -12,9 +12,7 @@ def render(
     s = ""
 
     natom = 0
-    for water, atomtypes in molecules_iter(
-        dg, layout, watermodel=watermodel, pbc=pbc
-    ):
+    for water, atomtypes in molecules_iter(dg, layout, watermodel=watermodel, pbc=pbc):
         natom += len(water)
         for i, site in enumerate(atomtypes):
             #            s += f"{1:>5}DOD  {site:5}{i:>5}{water[i,0]:>8.3f}{water[i,1]:>8.3f}{water[i,2]:>8.3f}\n"

@@ -14,8 +14,8 @@ test-install: requirements.txt
 	pip install --index-url https://test.pypi.org/simple/ clustice
 
 
-install:
-	./setup.py install
+# install:
+# 	./setup.py install
 uninstall:
 	-pip uninstall -y clustice
 build: $(SOURCES) README.md doc
@@ -24,16 +24,16 @@ build: $(SOURCES) README.md doc
 
 deploy: build
 	twine upload dist/*
-check:
-	./setup.py check
+# check:
+# 	./setup.py check
 
 
-doc: README.md CITATION.cff 
-	pdoc3 --html -o docs-tmp --force genice_core
+doc: README.md # CITATION.cff 
+	pdoc3 --html -o docs-tmp --force clustice
 	-rm -rf docs
-	mv docs-tmp/genice_core docs
+	mv docs-tmp/clustice docs
 
-%: temp_% replacer.py pyproject.toml
+%: %.j2 replacer.py pyproject.toml
 	python replacer.py < $< > $@
 
 
