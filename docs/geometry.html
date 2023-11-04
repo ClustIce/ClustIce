@@ -34,7 +34,7 @@ import numpy as np
 from sklearn import manifold
 
 
-def constellation(
+def _constellation(
     g: nx.Graph, edge_length: float = 1.0, max_iter: int = 1000
 ) -&gt; np.array:
     &#34;&#34;&#34;_summary_
@@ -140,7 +140,7 @@ class Vertex:
         self.force = np.zeros(3)
 
 
-def radius(vertices):
+def _radius(vertices):
     &#34;&#34;&#34;
     Radius of gyration
     &#34;&#34;&#34;
@@ -148,7 +148,7 @@ def radius(vertices):
     return np.sum(pos * pos) / pos.shape[0]
 
 
-def relax(vertices, g, edgelen):
+def _relax(vertices, g, edgelen):
     &#34;&#34;&#34;
     move vertices to reduce the energy
 
@@ -189,7 +189,7 @@ def relax(vertices, g, edgelen):
         vertices[v].position -= com
 
 
-def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
+def _tune_layout(g0, layout, edgelen=1.0, max_iter=100):
     &#34;&#34;&#34;
     Optimize the positions of the nodes in g0 and embed them as attributes.
 
@@ -206,9 +206,9 @@ def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
         vertices[v] = Vertex(pos=layout[v])
     verbose = 1
     for i in range(max_iter):
-        relax(vertices, g, edgelen)
+        _relax(vertices, g, edgelen)
         if i + 1 == verbose:
-            logger.info(f&#34;{verbose} {radius(vertices)} RG&#34;)
+            logger.info(f&#34;{verbose} {_radius(vertices)} RG&#34;)
             verbose *= 2
 
     new_layout = np.zeros_like(layout)
@@ -229,10 +229,10 @@ def make_layout(g: nx.Graph, edgelen: float = 1.0) -&gt; np.array:
         np.array: positions of vertices.
     &#34;&#34;&#34;
     # rough estimate of the positions of the nodes
-    layout = constellation(g, edgelen)
+    layout = _constellation(g, edgelen)
 
     # optimize the tetrahedral arrangements
-    return tune_layout(g, layout, edgelen)</code></pre>
+    return _tune_layout(g, layout, edgelen)</code></pre>
 </details>
 </section>
 <section>
@@ -242,66 +242,6 @@ def make_layout(g: nx.Graph, edgelen: float = 1.0) -&gt; np.array:
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="clustice.geometry.constellation"><code class="name flex">
-<span>def <span class="ident">constellation</span></span>(<span>g: networkx.classes.graph.Graph, edge_length: float = 1.0, max_iter: int = 1000) ‑> <built-in function array></span>
-</code></dt>
-<dd>
-<div class="desc"><p><em>summary</em></p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>g</code></strong> :&ensp;<code>nx.Graph</code></dt>
-<dd><em>description</em></dd>
-<dt><strong><code>edge_length</code></strong> :&ensp;<code>float</code>, optional</dt>
-<dd><em>description</em>. Defaults to 1.0.</dd>
-<dt><strong><code>max_iter</code></strong> :&ensp;<code>int</code>, optional</dt>
-<dd><em>description</em>. Defaults to 1000.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>np.array</code></dt>
-<dd><em>description</em></dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def constellation(
-    g: nx.Graph, edge_length: float = 1.0, max_iter: int = 1000
-) -&gt; np.array:
-    &#34;&#34;&#34;_summary_
-
-    Args:
-        g (nx.Graph): _description_
-        edge_length (float, optional): _description_. Defaults to 1.0.
-        max_iter (int, optional): _description_. Defaults to 1000.
-
-    Returns:
-        np.array: _description_
-    &#34;&#34;&#34;
-    # Prepare the distance matrix
-    D = dict(nx.all_pairs_shortest_path_length(g))
-    nnode = len(g.nodes)
-    table = np.zeros([nnode, nnode])
-    for i in D:
-        for j, d in D[i].items():
-            table[i, j] = d
-            table[j, i] = d
-    table *= edge_length
-
-    # Find the constellation that satisfies the distances.
-    mds = manifold.MDS(
-        n_components=3,
-        dissimilarity=&#34;precomputed&#34;,
-        max_iter=max_iter,
-        n_init=100,
-        metric=True,
-    )
-    pos = mds.fit_transform(table)
-
-    # layout = {i:v for i, v in enumerate(pos)}
-    return pos</code></pre>
-</details>
-</dd>
 <dt id="clustice.geometry.make_layout"><code class="name flex">
 <span>def <span class="ident">make_layout</span></span>(<span>g: networkx.classes.graph.Graph, edgelen: float = 1.0) ‑> <built-in function array></span>
 </code></dt>
@@ -333,123 +273,10 @@ def make_layout(g: nx.Graph, edgelen: float = 1.0) -&gt; np.array:
         np.array: positions of vertices.
     &#34;&#34;&#34;
     # rough estimate of the positions of the nodes
-    layout = constellation(g, edgelen)
+    layout = _constellation(g, edgelen)
 
     # optimize the tetrahedral arrangements
-    return tune_layout(g, layout, edgelen)</code></pre>
-</details>
-</dd>
-<dt id="clustice.geometry.radius"><code class="name flex">
-<span>def <span class="ident">radius</span></span>(<span>vertices)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Radius of gyration</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def radius(vertices):
-    &#34;&#34;&#34;
-    Radius of gyration
-    &#34;&#34;&#34;
-    pos = np.array([vx.position for key, vx in vertices.items()])
-    return np.sum(pos * pos) / pos.shape[0]</code></pre>
-</details>
-</dd>
-<dt id="clustice.geometry.relax"><code class="name flex">
-<span>def <span class="ident">relax</span></span>(<span>vertices, g, edgelen)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>move vertices to reduce the energy</p>
-<p>interaction is a function of a vector.</p>
-<p>R0: equilibrium length of an edge.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def relax(vertices, g, edgelen):
-    &#34;&#34;&#34;
-    move vertices to reduce the energy
-
-    interaction is a function of a vector.
-
-    R0: equilibrium length of an edge.
-    &#34;&#34;&#34;
-    K = 1
-    KR = 1
-    # distance of a skip pair.
-    golden = 1.62
-    skiplen = edgelen * golden
-    attractive = Interaction(lambda r: -K * (r - edgelen))
-    attractive2 = Interaction(lambda r: -K * (r - skiplen) / 2)
-    # repulsive = Interaction(lambda r: repel(r, KR, Rrep))
-
-    # reset the force at vertices.
-    for v in vertices:
-        vertices[v].resetf()
-
-    # accumulate force
-
-    # bond length
-    for i, j in g.edges():
-        attractive.force(vertices[i], vertices[j])
-    # containing angle
-    for i in g:
-        for j, k in it.combinations(g.neighbors(i), 2):
-            attractive2.force(vertices[j], vertices[k])
-
-    # damped action
-    for v in vertices:
-        vertices[v].force2vel()
-        vertices[v].progress(0.3)
-    # Centering
-    com = np.mean(np.array([vertices[v].position for v in g]), axis=0)
-    for v in g:
-        vertices[v].position -= com</code></pre>
-</details>
-</dd>
-<dt id="clustice.geometry.tune_layout"><code class="name flex">
-<span>def <span class="ident">tune_layout</span></span>(<span>g0, layout, edgelen=1.0, max_iter=100)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Optimize the positions of the nodes in g0 and embed them as attributes.</p>
-<p>layout:
-array of positions
-k:
-Bond length.
-max_iter: Number of iterations in the optimization.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
-    &#34;&#34;&#34;
-    Optimize the positions of the nodes in g0 and embed them as attributes.
-
-    layout:   array of positions
-    k:        Bond length.
-    max_iter: Number of iterations in the optimization.
-    &#34;&#34;&#34;
-    logger = getLogger()
-
-    # force g be an undirected graph
-    g = nx.Graph(g0)
-    vertices = dict()
-    for v in g:
-        vertices[v] = Vertex(pos=layout[v])
-    verbose = 1
-    for i in range(max_iter):
-        relax(vertices, g, edgelen)
-        if i + 1 == verbose:
-            logger.info(f&#34;{verbose} {radius(vertices)} RG&#34;)
-            verbose *= 2
-
-    new_layout = np.zeros_like(layout)
-    # update the positions in g0
-    for key, vx in vertices.items():
-        new_layout[key] = vx.position
-
-    return new_layout</code></pre>
+    return _tune_layout(g, layout, edgelen)</code></pre>
 </details>
 </dd>
 </dl>
@@ -590,11 +417,7 @@ max_iter: Number of iterations in the optimization.</p></div>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="clustice.geometry.constellation" href="#clustice.geometry.constellation">constellation</a></code></li>
 <li><code><a title="clustice.geometry.make_layout" href="#clustice.geometry.make_layout">make_layout</a></code></li>
-<li><code><a title="clustice.geometry.radius" href="#clustice.geometry.radius">radius</a></code></li>
-<li><code><a title="clustice.geometry.relax" href="#clustice.geometry.relax">relax</a></code></li>
-<li><code><a title="clustice.geometry.tune_layout" href="#clustice.geometry.tune_layout">tune_layout</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>

@@ -31,7 +31,7 @@
 import numpy as np
 
 
-def fourth_vector(v1, v2, v3):
+def _fourth_vector(v1, v2, v3):
     &#34;&#34;&#34;
     Calculate the fourth vector from three tetrahedral vectors.
     &#34;&#34;&#34;
@@ -39,7 +39,7 @@ def fourth_vector(v1, v2, v3):
 
 
 # from genice
-def quat2rotmat(q):
+def _quat2rotmat(q):
     a, b, c, d = q
     sp11 = a * a + b * b - (c * c + d * d)
     sp12 = -2.0 * (a * d + b * c)
@@ -53,7 +53,7 @@ def quat2rotmat(q):
     return np.array([[sp11, sp12, sp13], [sp21, sp22, sp23], [sp31, sp32, sp33]]).T
 
 
-def compensate(vectors):
+def _compensate(vectors):
     &#34;&#34;&#34;
     Arrange missing vectors for a tetrahedral node.
     &#34;&#34;&#34;
@@ -78,7 +78,7 @@ def compensate(vectors):
         c = np.sin(phih) * r2[1]
         d = -np.sin(phih) * r2[2]
         # quaternion to rotation matrix
-        R = quat2rotmat([a, b, c, d])
+        R = _quat2rotmat([a, b, c, d])
         # print(r2, r2@R)
         v1 = v0 @ R
         # VERIFY
@@ -105,7 +105,7 @@ def compensate(vectors):
         # print(e1@e2, e2@e3, e3@e1, Lx)
         vectors.append(v3)
     if len(vectors) == 3:
-        v4 = fourth_vector(*vectors)
+        v4 = _fourth_vector(*vectors)
         vectors.append(v4)
     # returns the newly added vectors
     return vectors[n:]
@@ -132,7 +132,7 @@ def tip4p():
     return sites, &#34;OHHM&#34;
 
 
-def orient_water(vout1, vout2):
+def _orient_water(vout1, vout2):
     &#34;&#34;&#34;
     Prepare the rotation matrix from two outgoing vectors.
     &#34;&#34;&#34;
@@ -163,12 +163,12 @@ def molecules_iter(dg, layout, watermodel=tip4p, max_iter=100, pbc=False):
             v_out = [v - np.floor(v + 0.5) for v in v_out]
 
         # Compensate missing tetrahedral vectors
-        addv = compensate(v_in + v_out)
+        addv = _compensate(v_in + v_out)
         miss_out = 2 - len(nei_out)
         v_out += random.sample(addv, miss_out)
 
         # Rotation matrix calculated from 2-in 2-out vectors.
-        R = orient_water(*v_out)
+        R = _orient_water(*v_out)
         water, atomtypes = watermodel()
         yield water @ R + layout[v], atomtypes</code></pre>
 </details>
@@ -180,89 +180,6 @@ def molecules_iter(dg, layout, watermodel=tip4p, max_iter=100, pbc=False):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="clustice.water.compensate"><code class="name flex">
-<span>def <span class="ident">compensate</span></span>(<span>vectors)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Arrange missing vectors for a tetrahedral node.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def compensate(vectors):
-    &#34;&#34;&#34;
-    Arrange missing vectors for a tetrahedral node.
-    &#34;&#34;&#34;
-    n = len(vectors)
-    assert 0 &lt; n &lt;= 4, &#34;At least one vector is required.&#34;
-
-    if len(vectors) == 1:
-        v0 = vectors[0]
-        e0 = v0 / np.linalg.norm(v0)
-        # ru is a random unit vector
-        ru = np.random.random(3)
-        ru /= np.linalg.norm(ru)
-        # r2 is a random vector perpendicular to v0
-        # It is the pivot to rotate v0
-        r2 = np.cross(e0, ru)
-        r2 /= np.linalg.norm(r2)
-        # rotate v0 to make the second vector
-        phih = np.radians(109.5 / 2)
-        # quaternion for rotation
-        a = np.cos(phih)
-        b = -np.sin(phih) * r2[0]
-        c = np.sin(phih) * r2[1]
-        d = -np.sin(phih) * r2[2]
-        # quaternion to rotation matrix
-        R = quat2rotmat([a, b, c, d])
-        # print(r2, r2@R)
-        v1 = v0 @ R
-        # VERIFY
-        # e1 = v1 / np.linalg.norm(v1)
-        vectors.append(v1)
-    if len(vectors) == 2:
-        v1, v2 = vectors
-        y = v2 - v1
-        z = v1 + v2
-        ey = y / np.linalg.norm(y)
-        ez = z / np.linalg.norm(z)
-        ex = np.cross(ey, ez)
-        L1 = np.linalg.norm(v1)
-        L2 = np.linalg.norm(v2)
-        L = (L1 + L2) / 2
-        theta = np.radians(109.5 / 2)
-        v3 = ex * L * np.sin(theta) - ez * L * np.cos(theta)
-        # print(v1,v2,v3)
-        # VERIFY
-        # e1 = v1 / np.linalg.norm(v1)
-        # e2 = v2 / np.linalg.norm(v2)
-        # e3 = v3 / np.linalg.norm(v3)
-        # Lx = np.linalg.norm(ex)
-        # print(e1@e2, e2@e3, e3@e1, Lx)
-        vectors.append(v3)
-    if len(vectors) == 3:
-        v4 = fourth_vector(*vectors)
-        vectors.append(v4)
-    # returns the newly added vectors
-    return vectors[n:]</code></pre>
-</details>
-</dd>
-<dt id="clustice.water.fourth_vector"><code class="name flex">
-<span>def <span class="ident">fourth_vector</span></span>(<span>v1, v2, v3)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Calculate the fourth vector from three tetrahedral vectors.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def fourth_vector(v1, v2, v3):
-    &#34;&#34;&#34;
-    Calculate the fourth vector from three tetrahedral vectors.
-    &#34;&#34;&#34;
-    return -(v1 + v2 + v3)</code></pre>
-</details>
-</dd>
 <dt id="clustice.water.molecules_iter"><code class="name flex">
 <span>def <span class="ident">molecules_iter</span></span>(<span>dg, layout, watermodel=&lt;function tip4p&gt;, max_iter=100, pbc=False)</span>
 </code></dt>
@@ -293,58 +210,14 @@ watermodel is a function that returns the intramolecular atomic coordinates.</p>
             v_out = [v - np.floor(v + 0.5) for v in v_out]
 
         # Compensate missing tetrahedral vectors
-        addv = compensate(v_in + v_out)
+        addv = _compensate(v_in + v_out)
         miss_out = 2 - len(nei_out)
         v_out += random.sample(addv, miss_out)
 
         # Rotation matrix calculated from 2-in 2-out vectors.
-        R = orient_water(*v_out)
+        R = _orient_water(*v_out)
         water, atomtypes = watermodel()
         yield water @ R + layout[v], atomtypes</code></pre>
-</details>
-</dd>
-<dt id="clustice.water.orient_water"><code class="name flex">
-<span>def <span class="ident">orient_water</span></span>(<span>vout1, vout2)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Prepare the rotation matrix from two outgoing vectors.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def orient_water(vout1, vout2):
-    &#34;&#34;&#34;
-    Prepare the rotation matrix from two outgoing vectors.
-    &#34;&#34;&#34;
-    y = vout2 - vout1
-    z = vout1 + vout2
-    y /= np.linalg.norm(y)
-    z /= np.linalg.norm(z)
-    x = np.cross(y, z)
-    return np.array([x, y, z])</code></pre>
-</details>
-</dd>
-<dt id="clustice.water.quat2rotmat"><code class="name flex">
-<span>def <span class="ident">quat2rotmat</span></span>(<span>q)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def quat2rotmat(q):
-    a, b, c, d = q
-    sp11 = a * a + b * b - (c * c + d * d)
-    sp12 = -2.0 * (a * d + b * c)
-    sp13 = 2.0 * (b * d - a * c)
-    sp21 = 2.0 * (a * d - b * c)
-    sp22 = a * a + c * c - (b * b + d * d)
-    sp23 = -2.0 * (a * b + c * d)
-    sp31 = 2.0 * (a * c + b * d)
-    sp32 = 2.0 * (a * b - c * d)
-    sp33 = a * a + d * d - (b * b + c * c)
-    return np.array([[sp11, sp12, sp13], [sp21, sp22, sp23], [sp31, sp32, sp33]]).T</code></pre>
 </details>
 </dd>
 <dt id="clustice.water.tip4p"><code class="name flex">
@@ -390,12 +263,8 @@ Order: OHHM</p></div>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="two-column">
-<li><code><a title="clustice.water.compensate" href="#clustice.water.compensate">compensate</a></code></li>
-<li><code><a title="clustice.water.fourth_vector" href="#clustice.water.fourth_vector">fourth_vector</a></code></li>
+<ul class="">
 <li><code><a title="clustice.water.molecules_iter" href="#clustice.water.molecules_iter">molecules_iter</a></code></li>
-<li><code><a title="clustice.water.orient_water" href="#clustice.water.orient_water">orient_water</a></code></li>
-<li><code><a title="clustice.water.quat2rotmat" href="#clustice.water.quat2rotmat">quat2rotmat</a></code></li>
 <li><code><a title="clustice.water.tip4p" href="#clustice.water.tip4p">tip4p</a></code></li>
 </ul>
 </li>

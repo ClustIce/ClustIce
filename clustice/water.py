@@ -3,7 +3,7 @@ import random
 import numpy as np
 
 
-def fourth_vector(v1, v2, v3):
+def _fourth_vector(v1, v2, v3):
     """
     Calculate the fourth vector from three tetrahedral vectors.
     """
@@ -11,7 +11,7 @@ def fourth_vector(v1, v2, v3):
 
 
 # from genice
-def quat2rotmat(q):
+def _quat2rotmat(q):
     a, b, c, d = q
     sp11 = a * a + b * b - (c * c + d * d)
     sp12 = -2.0 * (a * d + b * c)
@@ -25,7 +25,7 @@ def quat2rotmat(q):
     return np.array([[sp11, sp12, sp13], [sp21, sp22, sp23], [sp31, sp32, sp33]]).T
 
 
-def compensate(vectors):
+def _compensate(vectors):
     """
     Arrange missing vectors for a tetrahedral node.
     """
@@ -50,7 +50,7 @@ def compensate(vectors):
         c = np.sin(phih) * r2[1]
         d = -np.sin(phih) * r2[2]
         # quaternion to rotation matrix
-        R = quat2rotmat([a, b, c, d])
+        R = _quat2rotmat([a, b, c, d])
         # print(r2, r2@R)
         v1 = v0 @ R
         # VERIFY
@@ -77,7 +77,7 @@ def compensate(vectors):
         # print(e1@e2, e2@e3, e3@e1, Lx)
         vectors.append(v3)
     if len(vectors) == 3:
-        v4 = fourth_vector(*vectors)
+        v4 = _fourth_vector(*vectors)
         vectors.append(v4)
     # returns the newly added vectors
     return vectors[n:]
@@ -104,7 +104,7 @@ def tip4p():
     return sites, "OHHM"
 
 
-def orient_water(vout1, vout2):
+def _orient_water(vout1, vout2):
     """
     Prepare the rotation matrix from two outgoing vectors.
     """
@@ -135,11 +135,11 @@ def molecules_iter(dg, layout, watermodel=tip4p, max_iter=100, pbc=False):
             v_out = [v - np.floor(v + 0.5) for v in v_out]
 
         # Compensate missing tetrahedral vectors
-        addv = compensate(v_in + v_out)
+        addv = _compensate(v_in + v_out)
         miss_out = 2 - len(nei_out)
         v_out += random.sample(addv, miss_out)
 
         # Rotation matrix calculated from 2-in 2-out vectors.
-        R = orient_water(*v_out)
+        R = _orient_water(*v_out)
         water, atomtypes = watermodel()
         yield water @ R + layout[v], atomtypes

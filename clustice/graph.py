@@ -3,7 +3,7 @@ import numpy as np
 from pairlist import pairs_iter
 
 
-def create_graph(coords, threshold=0.35):
+def _create_graph(coords, threshold=0.35):
     # Initialize graph
     g = nx.Graph()
 
@@ -137,7 +137,7 @@ def great_icosahedron(ns=1, separation=0.27):
         num, vertices_scaled, face_vectors, vertices_to_faces, ns, dff, vscale
     )
     coord_dict = {i: coords[i] for i in range(len(coords))}
-    g = create_graph(coords)
+    g = _create_graph(coords)
     return g
 
 
@@ -211,7 +211,7 @@ def great_decahedron(nk=2, separation=0.27):
                         coords.append(coord)
 
     coord_dict = {i: coords[i] for i in range(len(coords))}
-    g = create_graph(coords)
+    g = _create_graph(coords)
     return g
 
 

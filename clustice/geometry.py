@@ -6,7 +6,7 @@ import numpy as np
 from sklearn import manifold
 
 
-def constellation(
+def _constellation(
     g: nx.Graph, edge_length: float = 1.0, max_iter: int = 1000
 ) -> np.array:
     """_summary_
@@ -112,7 +112,7 @@ class Vertex:
         self.force = np.zeros(3)
 
 
-def radius(vertices):
+def _radius(vertices):
     """
     Radius of gyration
     """
@@ -120,7 +120,7 @@ def radius(vertices):
     return np.sum(pos * pos) / pos.shape[0]
 
 
-def relax(vertices, g, edgelen):
+def _relax(vertices, g, edgelen):
     """
     move vertices to reduce the energy
 
@@ -161,7 +161,7 @@ def relax(vertices, g, edgelen):
         vertices[v].position -= com
 
 
-def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
+def _tune_layout(g0, layout, edgelen=1.0, max_iter=100):
     """
     Optimize the positions of the nodes in g0 and embed them as attributes.
 
@@ -178,9 +178,9 @@ def tune_layout(g0, layout, edgelen=1.0, max_iter=100):
         vertices[v] = Vertex(pos=layout[v])
     verbose = 1
     for i in range(max_iter):
-        relax(vertices, g, edgelen)
+        _relax(vertices, g, edgelen)
         if i + 1 == verbose:
-            logger.info(f"{verbose} {radius(vertices)} RG")
+            logger.info(f"{verbose} {_radius(vertices)} RG")
             verbose *= 2
 
     new_layout = np.zeros_like(layout)
@@ -201,7 +201,7 @@ def make_layout(g: nx.Graph, edgelen: float = 1.0) -> np.array:
         np.array: positions of vertices.
     """
     # rough estimate of the positions of the nodes
-    layout = constellation(g, edgelen)
+    layout = _constellation(g, edgelen)
 
     # optimize the tetrahedral arrangements
-    return tune_layout(g, layout, edgelen)
+    return _tune_layout(g, layout, edgelen)

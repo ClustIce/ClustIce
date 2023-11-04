@@ -31,7 +31,7 @@ import numpy as np
 from pairlist import pairs_iter
 
 
-def create_graph(coords, threshold=0.35):
+def _create_graph(coords, threshold=0.35):
     # Initialize graph
     g = nx.Graph()
 
@@ -165,7 +165,7 @@ def great_icosahedron(ns=1, separation=0.27):
         num, vertices_scaled, face_vectors, vertices_to_faces, ns, dff, vscale
     )
     coord_dict = {i: coords[i] for i in range(len(coords))}
-    g = create_graph(coords)
+    g = _create_graph(coords)
     return g
 
 
@@ -239,7 +239,7 @@ def great_decahedron(nk=2, separation=0.27):
                         coords.append(coord)
 
     coord_dict = {i: coords[i] for i in range(len(coords))}
-    g = create_graph(coords)
+    g = _create_graph(coords)
     return g
 
 
@@ -393,31 +393,6 @@ def large_barrelan():
     )</code></pre>
 </details>
 </dd>
-<dt id="clustice.graph.create_graph"><code class="name flex">
-<span>def <span class="ident">create_graph</span></span>(<span>coords, threshold=0.35)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def create_graph(coords, threshold=0.35):
-    # Initialize graph
-    g = nx.Graph()
-
-    # Add nodes to the graph
-    for i in range(len(coords)):
-        ## MM: set coord of the node when it is added.
-        g.add_node(i, pos=coords[i])
-
-    # Compute pairwise distances and add edges when distance &lt; threshold
-    for i, j, L in pairs_iter(coords, maxdist=threshold):
-        g.add_edge(i, j)
-
-    return g</code></pre>
-</details>
-</dd>
 <dt id="clustice.graph.great_decahedron"><code class="name flex">
 <span>def <span class="ident">great_decahedron</span></span>(<span>nk=2, separation=0.27)</span>
 </code></dt>
@@ -497,7 +472,7 @@ def large_barrelan():
                         coords.append(coord)
 
     coord_dict = {i: coords[i] for i in range(len(coords))}
-    g = create_graph(coords)
+    g = _create_graph(coords)
     return g</code></pre>
 </details>
 </dd>
@@ -628,7 +603,7 @@ def large_barrelan():
         num, vertices_scaled, face_vectors, vertices_to_faces, ns, dff, vscale
     )
     coord_dict = {i: coords[i] for i in range(len(coords))}
-    g = create_graph(coords)
+    g = _create_graph(coords)
     return g</code></pre>
 </details>
 </dd>
@@ -768,7 +743,6 @@ def large_barrelan():
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="two-column">
 <li><code><a title="clustice.graph.adamantane" href="#clustice.graph.adamantane">adamantane</a></code></li>
-<li><code><a title="clustice.graph.create_graph" href="#clustice.graph.create_graph">create_graph</a></code></li>
 <li><code><a title="clustice.graph.great_decahedron" href="#clustice.graph.great_decahedron">great_decahedron</a></code></li>
 <li><code><a title="clustice.graph.great_icosahedron" href="#clustice.graph.great_icosahedron">great_icosahedron</a></code></li>
 <li><code><a title="clustice.graph.large_barrelan" href="#clustice.graph.large_barrelan">large_barrelan</a></code></li>
