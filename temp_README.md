@@ -1,17 +1,14 @@
 # ClustIce
 
-A tool to generate exotic ice clusters.
+{{project.description}}
 
-version 0.3.1
+version {{project.version}}
 
 
 ## Requirements
 
-* numpy
-* networkx
-* pairlist
-* scikit-learn
-
+{% for item in project.dependencies %}* {{item}}
+{% endfor %}
 
 
 ## Installation
@@ -27,7 +24,7 @@ Install with pip3.
 
 ## API
 
-API manual is [here]().
+API manual is [here]({{project.urls.manual}}).
 
 ## Examples
 

@@ -17,6 +17,8 @@ py3dmol = "*"
 jupyter = "*"
 twine = "*"
 genice-core = ">=0.4"
+toml = "*"
+jinja2 = "*"
 
 [requires]
 python_version = "3.11"

@@ -9,7 +9,7 @@ version = "0.3.1" # major.minor.fix
 authors = [
   { name="Masakazu Matsumoto", email="vitroid@gmail.com" },
 ]
-description = "An ice cluster generator."
+description = "A tool to generate exotic ice clusters."
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [

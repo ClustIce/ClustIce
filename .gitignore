@@ -8,4 +8,4 @@ dist
 .ipynb_checkpoints/clustice-checkpoint.ipynb
 
 # これは望月の許可を得てから。
-graph.py
+# graph.py
