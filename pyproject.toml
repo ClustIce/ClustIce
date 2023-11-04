@@ -22,5 +22,5 @@ dependencies = ["numpy", "networkx", "pairlist", "scikit-learn"]
 [project.urls]
 "Homepage" = "https://github.com/vitroid/ClustIce"
 "Bug Tracker" = "https://github.com/vitroid/ClustIce/issues"
-"manual" = "https://clustice.github.io/clustice"
+"manual" = "https://clustice.github.io/ClustIce"
 
