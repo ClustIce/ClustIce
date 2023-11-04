@@ -27,7 +27,7 @@ Install with pip3.
 
 ## API
 
-API manual is [here]().
+API manual is [here](https://clustice.github.io/clustice).
 
 ## Examples
 

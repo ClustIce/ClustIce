@@ -42,13 +42,14 @@ def serialize(dg: nx.DiGraph) -&gt; str:
     Returns:
         str: a string representing the digraph.
     &#34;&#34;&#34;
+
     def encode1(v):
         return &#34;+&#34;.join(f&#34;{x}&#34; for x in sorted(dg.successors(v)))
 
     return &#34;.&#34;.join(encode1(v) for v in sorted(dg.nodes()))
 
 
-def deserialize(s:str) -&gt; nx.Graph:
+def deserialize(s: str) -&gt; nx.Graph:
     &#34;&#34;&#34;Decode a string into a digraph
 
     Args:
@@ -93,7 +94,7 @@ def deserialize(s:str) -&gt; nx.Graph:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def deserialize(s:str) -&gt; nx.Graph:
+<pre><code class="python">def deserialize(s: str) -&gt; nx.Graph:
     &#34;&#34;&#34;Decode a string into a digraph
 
     Args:
@@ -140,6 +141,7 @@ def deserialize(s:str) -&gt; nx.Graph:
     Returns:
         str: a string representing the digraph.
     &#34;&#34;&#34;
+
     def encode1(v):
         return &#34;+&#34;.join(f&#34;{x}&#34; for x in sorted(dg.successors(v)))
 

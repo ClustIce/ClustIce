@@ -50,9 +50,7 @@ def quat2rotmat(q):
     sp31 = 2.0 * (a * c + b * d)
     sp32 = 2.0 * (a * b - c * d)
     sp33 = a * a + d * d - (b * b + c * c)
-    return np.array(
-        [[sp11, sp12, sp13], [sp21, sp22, sp23], [sp31, sp32, sp33]]
-    ).T
+    return np.array([[sp11, sp12, sp13], [sp21, sp22, sp23], [sp31, sp32, sp33]]).T
 
 
 def compensate(vectors):
@@ -129,9 +127,7 @@ def tip4p():
     hy = L1 * np.sin(theta / 2)
     hz = L1 * np.cos(theta / 2)
     mz = L2
-    sites = np.array(
-        [[0.0, 0.0, 0.0], [0.0, hy, hz], [0.0, -hy, hz], [0.0, 0.0, mz]]
-    )
+    sites = np.array([[0.0, 0.0, 0.0], [0.0, hy, hz], [0.0, -hy, hz], [0.0, 0.0, mz]])
     sites -= (sites[1] + sites[2]) / 18
     return sites, &#34;OHHM&#34;
 
@@ -348,9 +344,7 @@ watermodel is a function that returns the intramolecular atomic coordinates.</p>
     sp31 = 2.0 * (a * c + b * d)
     sp32 = 2.0 * (a * b - c * d)
     sp33 = a * a + d * d - (b * b + c * c)
-    return np.array(
-        [[sp11, sp12, sp13], [sp21, sp22, sp23], [sp31, sp32, sp33]]
-    ).T</code></pre>
+    return np.array([[sp11, sp12, sp13], [sp21, sp22, sp23], [sp31, sp32, sp33]]).T</code></pre>
 </details>
 </dd>
 <dt id="clustice.water.tip4p"><code class="name flex">
@@ -374,9 +368,7 @@ Order: OHHM</p></div>
     hy = L1 * np.sin(theta / 2)
     hz = L1 * np.cos(theta / 2)
     mz = L2
-    sites = np.array(
-        [[0.0, 0.0, 0.0], [0.0, hy, hz], [0.0, -hy, hz], [0.0, 0.0, mz]]
-    )
+    sites = np.array([[0.0, 0.0, 0.0], [0.0, hy, hz], [0.0, -hy, hz], [0.0, 0.0, mz]])
     sites -= (sites[1] + sites[2]) / 18
     return sites, &#34;OHHM&#34;</code></pre>
 </details>
