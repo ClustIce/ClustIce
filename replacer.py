@@ -5,7 +5,5 @@ import toml
 import sys
 
 proj = toml.load("pyproject.toml")
-# env = jj.Environment(loader=BaseLoader)
-# t = env.get_template(sys.stdin.read())
-t = jj.Template(sys.stdin.read())
+t = jj.Environment(loader=jj.FileSystemLoader(".")).from_string(sys.stdin.read())
 print(t.render(**proj))
