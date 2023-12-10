@@ -6,6 +6,7 @@ dist
 .vscode
 *.png
 .ipynb_checkpoints/clustice-checkpoint.ipynb
+tanaka_cg/
 
 # これは望月の許可を得てから。
 # graph.py
