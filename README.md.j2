@@ -1,13 +1,13 @@
 # ClustIce
 
-{{project.description}}
+{{tool.poetry.description}}
 
-version {{project.version}}
+version {{tool.poetry.version}}
 
 
 ## Requirements
 
-{% for item in project.dependencies %}* {{item}}
+{% for item in tool.poetry.dependencies %}* {{item}}
 {% endfor %}
 
 

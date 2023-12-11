@@ -7,9 +7,9 @@ version 0.3.1
 
 ## Requirements
 
+* python
 * numpy
 * networkx
-* pairlist
 * scikit-learn
 
 
