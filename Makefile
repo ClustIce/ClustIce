@@ -1,39 +1,28 @@
 SOURCES=$(wildcard clustice/*.py)
+PKGNAME=clustice
 
 all: README.md
 	echo Hello.
 
 
-# pep8:
-# 	autopep8 -r -a -a -i clustice/
-test-deploy: build
-	-pip install twine
-	twine upload -r pypitest dist/*
-test-install: requirements.txt
-	pip install -r $<
-	pip install --index-url https://test.pypi.org/simple/ clustice
-
-
-# install:
-# 	./setup.py install
+test-deploy:
+	poetry publish --build -r testpypi
+test-install:
+	pip install --index-url https://test.pypi.org/simple/ $(PKGNAME)
 uninstall:
-	-pip uninstall -y clustice
-build: $(SOURCES) README.md doc
-	python3 -m build
-
-
-deploy: build
-	twine upload dist/*
-# check:
-# 	./setup.py check
+	-pip uninstall -y $(PKGNAME)
+build: README.md $(wildcard cycles/*.py)
+	poetry build
+deploy:
+	poetry publish --build
+check:
+	poetry check
 
 
 doc: README.md # CITATION.cff 
-	pdoc3 --html -o docs-tmp --force clustice
-	-rm -rf docs
-	mv docs-tmp/clustice docs
+	pdoc -o docs ./clustice --docformat google
 
-%: %.j2 replacer.py pyproject.toml
+%: temp_% replacer.py pyproject.toml
 	python replacer.py < $< > $@
 
 

@@ -3,21 +3,33 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 
-[project]
+[tool.poetry]
 name = "ClustIce"
 version = "0.3.1" # major.minor.fix
 authors = [
-  { name="Masakazu Matsumoto", email="vitroid@gmail.com" },
+  "Masakazu Matsumoto <vitroid@gmail.com>",
 ]
 description = "A tool to generate exotic ice clusters."
-readme = "README.md"
-requires-python = ">=3.9"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
-dependencies = ["numpy", "networkx", "pairlist", "scikit-learn"]
+# readme = "README.md"
+# requires-python = ">=3.9"
+# classifiers = [
+#     "Programming Language :: Python :: 3",
+#     "License :: OSI Approved :: MIT License",
+#     "Operating System :: OS Independent",
+# ]
+dependencies = {"python" = "^3.9",numpy = "^1.26.2",networkx = "^3.2.1",scikit-learn = "^1.3.2"}
+#, "networkx", "pairlist", "scikit-learn"]
+
+[tool.poetry.group.dev.dependencies]
+jinja2 = "^3.1.2"
+toml = "^0.10.2"
+pdoc = "^14.1.0"
+jupyter = "^1.0.0"
+ipykernel = "^6.29.4"
+genice-core = "^0.9"
+py3dmol = "^2.1.0"
+pairlist = "^0.5.1.2"
+genice2 = ">=2.2.5.5"
 
 [project.urls]
 "Homepage" = "https://github.com/vitroid/ClustIce"
