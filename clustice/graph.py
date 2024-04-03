@@ -20,6 +20,21 @@ def _create_graph(coords, threshold=0.35):
 
 
 def great_icosahedron(ns=1, separation=0.27):
+    """
+    The `great_icosahedron` function generates the coordinates of atoms in a great icosahedron structure
+    based on the specified parameters.
+
+    Args:
+      ns: The parameter `ns` represents the size of the icosahedron. It determines the number of
+    subdivisions made on each face of the icosahedron. The higher the value of `ns`, the more
+    subdivisions and smaller the resulting structure will be. Defaults to 1
+      separation: The "separation" parameter represents the distance between atoms in the icosahedron
+    structure, measured in nanometers (nm).
+
+    Returns:
+      a graph object.
+    """
+
     def compute_vertices():
         phi = float((1 + np.sqrt(5)) / 2)  # 1.618
         return np.array(
@@ -136,12 +151,26 @@ def great_icosahedron(ns=1, separation=0.27):
     coords = mk_coords(
         num, vertices_scaled, face_vectors, vertices_to_faces, ns, dff, vscale
     )
-    coord_dict = {i: coords[i] for i in range(len(coords))}
     g = _create_graph(coords)
     return g
 
 
 def great_decahedron(nk=2, separation=0.27):
+    """
+    The function `great_decahedron` generates a graph representing a great decahedron structure based on
+    given parameters.
+
+    Args:
+      nk: The parameter `nk` represents the number of layers of pentagons in the great decahedron
+    structure. It determines the size and complexity of the structure. The default value is 2, which
+    means there are 2 layers of pentagons. Defaults to 2
+      separation: The "separation" parameter represents the distance between atoms in nanometers. It is
+    used to calculate the distances between the vertices and edges of the great decahedron structure.
+
+    Returns:
+      The function `great_decahedron` returns a graph object `g`.
+    """
+
     # pentagon vertices (5 in total)
     def compute_vertices():
         return np.array(
@@ -210,7 +239,6 @@ def great_decahedron(nk=2, separation=0.27):
                         coord = basepoint + j * vec1 + k * vec2 + l * vec3
                         coords.append(coord)
 
-    coord_dict = {i: coords[i] for i in range(len(coords))}
     g = _create_graph(coords)
     return g
 

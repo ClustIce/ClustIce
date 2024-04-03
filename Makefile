@@ -22,7 +22,7 @@ check:
 doc: README.md # CITATION.cff 
 	pdoc -o docs ./clustice --docformat google
 
-%: %.j2 replacer.py pyproject.toml
+%: temp_% replacer.py pyproject.toml
 	python replacer.py < $< > $@
 
 
