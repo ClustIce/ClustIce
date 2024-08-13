@@ -2,7 +2,7 @@
 
 {{tool.poetry.description}}
 
-version {{tool.poetry.version}}
+version {{version}}
 
 
 ## Requirements

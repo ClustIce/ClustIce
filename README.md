@@ -2,7 +2,7 @@
 
 A tool to generate exotic ice clusters.
 
-version 0.3.1
+version 0.0.1
 
 
 ## Requirements
@@ -11,6 +11,7 @@ version 0.3.1
 * numpy
 * networkx
 * scikit-learn
+* cycless
 
 
 
