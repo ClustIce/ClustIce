@@ -5,6 +5,10 @@ build-backend = "poetry_dynamic_versioning.backend"
 [tool.poetry-dynamic-versioning]
 enable = true
 format = "{base}"
+style = "pep440"
+
+[project]
+dynamic=["version"]
 
 [tool.poetry]
 name = "ClustIce"
