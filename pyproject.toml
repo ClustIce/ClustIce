@@ -1,22 +1,17 @@
-[build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
-build-backend = "poetry_dynamic_versioning.backend"
-
-[tool.poetry-dynamic-versioning]
-enable = true
-format = "{base}"
-style = "pep440"
-
-[project]
-dynamic=["version"]
-
 [tool.poetry]
 name = "ClustIce"
 version = "0.0.0" # major.minor.fix
-authors = [
-  "Masakazu Matsumoto <vitroid@gmail.com>",
-]
+authors = [ "Masakazu Matsumoto <vitroid@gmail.com>" ]
 description = "A tool to generate exotic ice clusters."
+homepage = "https://github.com/vitroid/ClustIce"
+repository = "https://github.com/vitroid/ClustIce"
+readme = "README.md"
+license = "MIT"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+# format = "{base}"
+style = "pep440"
 
 [tool.poetry.dependencies]
 "python" = "^3.9"
@@ -36,8 +31,10 @@ py3dmol = "^2.1.0"
 pairlist = "^0.5.1.2"
 genice2 = ">=2.2.5.5"
 
-[project.urls]
-"Homepage" = "https://github.com/vitroid/ClustIce"
-"Bug Tracker" = "https://github.com/vitroid/ClustIce/issues"
-"manual" = "https://clustice.github.io/ClustIce"
 
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"
+
+[project.urls]
+"manual" = "https://clustice.github.io/ClustIce"

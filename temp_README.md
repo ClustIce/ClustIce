@@ -4,12 +4,10 @@
 
 version {{version}}
 
-
 ## Requirements
 
 {% for item in tool.poetry.dependencies %}* {{item}}
 {% endfor %}
-
 
 ## Installation
 
@@ -72,5 +70,3 @@ gro = render(dg, layout, watermodel=tip4p)
 with open("sample.gro", "w") as f:
     f.write(gro)
 ```
-
-

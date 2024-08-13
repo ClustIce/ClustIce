@@ -11,13 +11,14 @@ test-install:
 	pip install --index-url https://test.pypi.org/simple/ $(PKGNAME)
 uninstall:
 	-pip uninstall -y $(PKGNAME)
-build: README.md $(wildcard cycles/*.py)
+build: README.md
 	poetry build
 deploy:
 	poetry publish --build
 check:
 	poetry check
-
+prepare-auto-versioning:
+	poetry self add "poetry-dynamic-versioning[plugin]"
 
 doc: README.md # CITATION.cff 
 	pdoc -o docs ./clustice --docformat google

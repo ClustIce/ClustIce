@@ -4,7 +4,6 @@ A tool to generate exotic ice clusters.
 
 version 0.0.0
 
-
 ## Requirements
 
 * python
@@ -12,7 +11,6 @@ version 0.0.0
 * networkx
 * scikit-learn
 * cycless
-
 
 
 ## Installation
@@ -76,5 +74,3 @@ gro = render(dg, layout, watermodel=tip4p)
 with open("sample.gro", "w") as f:
     f.write(gro)
 ```
-
-
