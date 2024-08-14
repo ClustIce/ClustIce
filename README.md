@@ -2,7 +2,7 @@
 
 A tool to generate exotic ice clusters.
 
-version 0.0.0
+version 0.7.1
 
 ## Requirements
 

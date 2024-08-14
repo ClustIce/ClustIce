@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ClustIce"
-version = "0.0.0" # major.minor.fix
+version = "0.7.1" # major.minor.fix
 authors = [ "Masakazu Matsumoto <vitroid@gmail.com>" ]
 description = "A tool to generate exotic ice clusters."
 homepage = "https://github.com/vitroid/ClustIce"
@@ -8,10 +8,10 @@ repository = "https://github.com/vitroid/ClustIce"
 readme = "README.md"
 license = "MIT"
 
-[tool.poetry-dynamic-versioning]
-enable = true
-# format = "{base}"
-style = "pep440"
+# [tool.poetry-dynamic-versioning]
+# enable = true
+# # format = "{base}"
+# style = "pep440"
 
 [tool.poetry.dependencies]
 "python" = "^3.9"
