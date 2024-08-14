@@ -1,6 +1,7 @@
 import random
 
 import numpy as np
+from dataclasses import dataclass
 
 
 def _fourth_vector(v1, v2, v3):
@@ -88,20 +89,24 @@ def _compensate(vectors):
 # https://github.com/vitroid/GenIce
 
 
-def tip4p():
+@dataclass
+class tip4p:
     """Interaction sites of TIP4P (?)
     Order: OHHM
     """
-    L1 = 0.9572 / 10
-    L2 = 0.15 / 10
-    theta = np.radians(104.52)
 
-    hy = L1 * np.sin(theta / 2)
-    hz = L1 * np.cos(theta / 2)
-    mz = L2
-    sites = np.array([[0.0, 0.0, 0.0], [0.0, hy, hz], [0.0, -hy, hz], [0.0, 0.0, mz]])
+    _L1 = 0.9572 / 10
+    _L2 = 0.15 / 10
+    _theta = np.radians(104.52)
+
+    _hy = _L1 * np.sin(_theta / 2)
+    _hz = _L1 * np.cos(_theta / 2)
+    _mz = _L2
+    sites = np.array(
+        [[0.0, 0.0, 0.0], [0.0, _hy, _hz], [0.0, -_hy, _hz], [0.0, 0.0, _mz]]
+    )
     sites -= (sites[1] + sites[2]) / 18
-    return sites, "OHHM"
+    labels = "OHHM"
 
 
 def _orient_water(vout1, vout2):
@@ -116,13 +121,17 @@ def _orient_water(vout1, vout2):
     return np.array([x, y, z])
 
 
-def molecules_iter(dg, layout, watermodel=tip4p, max_iter=100, pbc=False):
+def molecules_iter(
+    dg, layout, water_model=tip4p, max_iter: int = 100, cell_matrix=None
+):
     """
     Generate an atomic arrangements of water cluster fron the given digraph dg.
 
     A node of the graph can contain its positions as an attribute "pos".
     watermodel is a function that returns the intramolecular atomic coordinates.
     """
+    if cell_matrix is not None:
+        cell_inv = np.linalg.inv(cell_matrix)
     for v in dg:
         # v is the label of a vertex
         nei_in = [x for x in dg.predecessors(v)]
@@ -130,9 +139,9 @@ def molecules_iter(dg, layout, watermodel=tip4p, max_iter=100, pbc=False):
         # edge vectors from/to vertex v (origin is always v)
         v_in = [layout[i] - layout[v] for i in nei_in]
         v_out = [layout[i] - layout[v] for i in nei_out]
-        if pbc:
-            v_in = [v - np.floor(v + 0.5) for v in v_in]
-            v_out = [v - np.floor(v + 0.5) for v in v_out]
+        if cell_matrix is not None:
+            v_in = [v - np.floor(v @ cell_inv + 0.5) @ cell_matrix for v in v_in]
+            v_out = [v - np.floor(v @ cell_inv + 0.5) @ cell_matrix for v in v_out]
 
         # Compensate missing tetrahedral vectors
         addv = _compensate(v_in + v_out)
@@ -141,5 +150,4 @@ def molecules_iter(dg, layout, watermodel=tip4p, max_iter=100, pbc=False):
 
         # Rotation matrix calculated from 2-in 2-out vectors.
         R = _orient_water(*v_out)
-        water, atomtypes = watermodel()
-        yield water @ R + layout[v], atomtypes
+        yield water_model.sites @ R + layout[v], water_model.labels

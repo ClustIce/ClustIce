@@ -191,7 +191,7 @@ def _tune_layout(g0, layout, edgelen=1.0, max_iter=100):
     return new_layout
 
 
-def make_layout(g: nx.Graph, edgelen: float = 1.0) -> np.array:
+def make_layout(g: nx.Graph, edge_length: float = 1.0) -> np.array:
     """Arrange the positions of the nodes in 3D.
 
     Args:
@@ -201,7 +201,7 @@ def make_layout(g: nx.Graph, edgelen: float = 1.0) -> np.array:
         np.array: positions of vertices.
     """
     # rough estimate of the positions of the nodes
-    layout = _constellation(g, edgelen)
+    layout = _constellation(g, edge_length)
 
     # optimize the tetrahedral arrangements
-    return _tune_layout(g, layout, edgelen)
+    return _tune_layout(g, layout, edge_length)

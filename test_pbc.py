@@ -32,9 +32,8 @@ dg = genice_core.ice_graph(
 gro = render(
     dg,
     layout @ cell,
-    watermodel=tip4p,
-    cell=f"{cell[0,0]} {cell[1,1]} {cell[2,2]}",
-    pbc=True,
+    water_model=tip4p,
+    cell_matrix=cell,
 )
 with open(f"save.gro", "w") as f:
     f.write(gro)

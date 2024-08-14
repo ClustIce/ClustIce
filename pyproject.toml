@@ -30,6 +30,7 @@ genice-core = "^0.9.1"
 py3dmol = "^2.1.0"
 pairlist = "^0.5.1.2"
 genice2 = ">=2.2.5.5"
+genice2-svg = "^2.4.1"
 
 
 [build-system]

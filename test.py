@@ -34,12 +34,12 @@ dg = genice_core.ice_graph(g, vertexPositions=layout)
 
 test_encoder = False
 if test_encoder:
-    id = encode(dg)
-    dg2 = decode(id)
+    id = serialize(dg)
+    dg2 = deserialize(id)
     assert nx.is_isomorphic(dg, dg2)
 
 
 # put water molecules
-gro = render(dg, layout, watermodel=tip4p)
+gro = render(dg, layout, water_model=tip4p)
 with open(f"save.gro", "w") as f:
     f.write(gro)

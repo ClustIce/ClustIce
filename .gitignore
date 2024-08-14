@@ -7,3 +7,4 @@ dist
 *.png
 .ipynb_checkpoints/clustice-checkpoint.ipynb
 tanaka_cg/
+*.svg

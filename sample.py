@@ -12,7 +12,7 @@ L = 0.27
 
 # note: g must be a graph whose labels start from 0.
 # g = graph.great_icosahedron(12, separation=L)
-g = graph.great_decahedron(12)
+g = graph.great_decahedron(32)  # 1.8 million atoms!
 # g = graph.small_barrelan()
 # g = graph.large_barrelan()
 # g = graph.twistane()
@@ -28,13 +28,17 @@ if "pos" in g.nodes[0]:
     layout = np.array([g.nodes[v]["pos"] for v in g])
 else:
     # estimate of the positions of the nodes
-    layout = make_layout(g, edgelen=L)
+    layout = make_layout(g, edge_length=L)
 
 # set orientations of the hydrogen bonds.
 # if vertexPositions is given, the net dipole moment is minimized.
 dg = genice_core.ice_graph(g, vertexPositions=layout, dipoleOptimizationCycles=100)
 
 # put water molecules
-gro = render(dg, layout, watermodel=tip4p)
+gro = render(
+    dg,
+    layout,
+    water_model=tip4p,
+)
 with open("sample.gro", "w") as f:
     f.write(gro)
