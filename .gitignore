@@ -8,3 +8,6 @@ dist
 .ipynb_checkpoints/clustice-checkpoint.ipynb
 tanaka_cg/
 *.svg
+*.scad
+*.stl
+*.yap

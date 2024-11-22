@@ -109,6 +109,22 @@ class tip4p:
     labels = "OHHM"
 
 
+@dataclass
+class spce:
+    """Interaction sites of SPC/E
+    Order: OHH
+    """
+
+    _L1 = 1.00 / 10
+    _theta = np.radians(109.47)
+
+    _hy = _L1 * np.sin(_theta / 2)
+    _hz = _L1 * np.cos(_theta / 2)
+    sites = np.array([[0.0, 0.0, 0.0], [0.0, _hy, _hz], [0.0, -_hy, _hz]])
+    sites -= (sites[1] + sites[2]) / 18
+    labels = "OHH"
+
+
 def _orient_water(vout1, vout2):
     """
     Prepare the rotation matrix from two outgoing vectors.
