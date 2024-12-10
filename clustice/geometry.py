@@ -43,7 +43,7 @@ def _constellation(
     return pos
 
 
-# def constellation(g, edgelen=1.0, max_iter=1000):
+# def _constellation_proximity(g, edge_length=1.0, max_iter=1000):
 #     """
 #     A rough estimate of the positions of the nodes
 
@@ -56,8 +56,8 @@ def _constellation(
 #     for i in D:
 #         for j, d in D[i].items():
 #             if d==1 or (g.degree(i) < 4 and g.degree(j) < 4):
-#                 table[i,j] = d * edgelen
-#                 table[j,i] = d * edgelen
+#                 table[i,j] = d * edge_length
+#                 table[j,i] = d * edge_length
 #             else:
 #                 table[i,j] = None
 #                 table[j,i] = None
@@ -120,7 +120,7 @@ def _radius(vertices):
     return np.sum(pos * pos) / pos.shape[0]
 
 
-def _relax(vertices, g, edgelen):
+def _relax(vertices, g, edge_length):
     """
     move vertices to reduce the energy
 
@@ -131,10 +131,10 @@ def _relax(vertices, g, edgelen):
     K = 1
     KR = 1
     # distance of a skip pair.
-    golden = 1.62
-    skiplen = edgelen * golden
-    attractive = Interaction(lambda r: -K * (r - edgelen))
-    attractive2 = Interaction(lambda r: -K * (r - skiplen) / 2)
+    golden_ratio = 1.62
+    skip_length = edge_length * golden_ratio
+    attractive = Interaction(lambda r: -K * (r - edge_length))
+    attractive2 = Interaction(lambda r: -K * (r - skip_length) / 20)
     # repulsive = Interaction(lambda r: repel(r, KR, Rrep))
 
     # reset the force at vertices.
@@ -193,6 +193,8 @@ def _tune_layout(g0, layout, edgelen=1.0, max_iter=100):
 
 def make_layout(g: nx.Graph, edge_length: float = 1.0) -> np.array:
     """Arrange the positions of the nodes in 3D.
+
+    周期境界条件に対応していない。
 
     Args:
         g (nx.Graph): An ice-like undirected graph whose degrees are not greater than 4.

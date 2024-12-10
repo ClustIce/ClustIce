@@ -346,5 +346,28 @@ def large_barrelan():
     )  # Large barrelan
 
 
+def hex_ice():
+    """The larger fragment of the hexagonal ice. The smaller one is the small barrelan."""
+    return nx.Graph(
+        [
+            [0, 1],
+            [1, 2],
+            [2, 3],
+            [3, 4],
+            [4, 5],
+            [5, 0],
+            [0, 6],
+            [2, 8],
+            [4, 10],
+            [6, 7],
+            [7, 8],
+            [8, 9],
+            [9, 10],
+            [10, 11],
+            [11, 6],
+        ]
+    )
+
+
 # g = nx.cycle_graph(6) # hexagon
 # g = nx.cubical_graph() # cubic octamer

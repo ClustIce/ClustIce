@@ -5,7 +5,7 @@ all: README.md $(patsubst %.scad, %.stl, $(wildcard *.scad))
 	echo Hello.
 
 
-test-deploy:
+test-deploy: clean
 	poetry publish --build -r testpypi
 test-install:
 	pip install --index-url https://test.pypi.org/simple/ $(PKGNAME)
@@ -13,7 +13,7 @@ uninstall:
 	-pip uninstall -y $(PKGNAME)
 build: README.md
 	poetry build
-deploy:
+deploy: clean
 	poetry publish --build
 check:
 	poetry check
