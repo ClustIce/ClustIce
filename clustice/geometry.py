@@ -191,7 +191,9 @@ def _tune_layout(g0, layout, edgelen=1.0, max_iter=100):
     return new_layout
 
 
-def make_layout(g: nx.Graph, edge_length: float = 1.0) -> np.array:
+def make_layout(
+    g: nx.Graph, edge_length: float = 1.0, max_iter: int = 1000
+) -> np.array:
     """Arrange the positions of the nodes in 3D.
 
     周期境界条件に対応していない。
@@ -203,7 +205,7 @@ def make_layout(g: nx.Graph, edge_length: float = 1.0) -> np.array:
         np.array: positions of vertices.
     """
     # rough estimate of the positions of the nodes
-    layout = _constellation(g, edge_length)
+    layout = _constellation(g, edge_length, max_iter=max_iter)
 
     # optimize the tetrahedral arrangements
     return _tune_layout(g, layout, edge_length)
