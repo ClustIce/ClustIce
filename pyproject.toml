@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ClustIce"
-version = "0.7.3" # major.minor.fix
+version = "0.8.0" # major.minor.fix
 authors = [ "Masakazu Matsumoto <vitroid@gmail.com>" ]
 description = "A tool to generate exotic ice clusters."
 homepage = "https://github.com/vitroid/ClustIce"
